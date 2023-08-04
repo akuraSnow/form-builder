@@ -1,0 +1,71 @@
+{
+    "fields": [
+        {
+            "id": "html",
+            "type": "html",
+            "label": "<div>2222<div>",
+            "layoutDefinition": {
+                "row": 2,
+                "column": 10
+            }
+        },
+        {
+            "id": "input",
+            "type": "input",
+            "label": "我是一个输入框",
+            "dataBinding": {
+                "path": "premium",
+                "converter": "convertLblPaymentAmount",
+                "mode": "modelToView"
+            },
+            "layoutDefinition": {
+                "row": 25,
+                "column": 0
+            },
+            "css": {
+                "container": "font-14-lh-16"
+            }
+        },
+        {
+            "id": "html",
+            "type": "html",
+            "label": "<div>2-7<div>",
+            "layoutDefinition": {
+                "row": 2,
+                "column": 7
+            }
+        },
+        {
+            "id": "input",
+            "type": "input",
+            "label": "666",
+            "dataBinding": {
+                "path": "premium",
+                "converter": "convertLblPaymentAmount"
+            },
+            "layoutDefinition": {
+                "row": 1,
+                "column": 0
+            }
+        },
+        {
+            "id": "html",
+            "type": "html",
+            "label": "222222",
+            "layoutDefinition": {
+                "row": 5,
+                "column": 0
+            }
+        },
+        {
+            "id": "html",
+            "type": "html",
+            "label": "<div>2-8<div>",
+            "layoutDefinition": {
+                "row": 2,
+                "column": 8
+            }
+        }
+    ]
+
+}
