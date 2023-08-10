@@ -1,14 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+import { RegisterFormBuilder } from "./dynamic/builder/pageFormbuilder";
+import RenderProvider from './renderProvider/index'
+import data from "./UI-element/index";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
+RegisterFormBuilder.use(data).render(RenderProvider);
 
 root.render(
   <BrowserRouter>

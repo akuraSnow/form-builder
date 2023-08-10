@@ -6,7 +6,13 @@
             "label": "<div>2222<div>",
             "layoutDefinition": {
                 "row": 2,
-                "column": 10
+                "column": 10,
+                "columnSpan": 4
+            },
+            "dataBinding": {
+                "path": "premium",
+                "converter": "convertLblPaymentAmount",
+                "mode": "modelToView"
             }
         },
         {
@@ -14,13 +20,14 @@
             "type": "input",
             "label": "我是一个输入框",
             "dataBinding": {
-                "path": "premium",
+                "path": "application.premium",
                 "converter": "convertLblPaymentAmount",
                 "mode": "modelToView"
             },
             "layoutDefinition": {
                 "row": 25,
-                "column": 0
+                "column": 0,
+                "columnSpan": 6
             },
             "css": {
                 "container": "font-14-lh-16"
@@ -32,7 +39,8 @@
             "label": "<div>2-7<div>",
             "layoutDefinition": {
                 "row": 2,
-                "column": 7
+                "column": 7,
+                "columnSpan": 4
             }
         },
         {
@@ -40,12 +48,13 @@
             "type": "input",
             "label": "666",
             "dataBinding": {
-                "path": "premium",
+                "path": "application.name",
                 "converter": "convertLblPaymentAmount"
             },
             "layoutDefinition": {
                 "row": 1,
-                "column": 0
+                "column": 0,
+                "columnSpan": 4
             }
         },
         {
@@ -63,7 +72,8 @@
             "label": "<div>2-8<div>",
             "layoutDefinition": {
                 "row": 2,
-                "column": 8
+                "column": 8,
+                "columnSpan": 4
             }
         }
     ]

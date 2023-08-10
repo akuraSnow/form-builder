@@ -1,20 +1,17 @@
-import { FormBuilder } from "../../dynamic/builder";
+// import { FormBuilder } from "../About";
+
+
+import PageFormBuilder from "../../dynamic/builder/pageFormbuilder";
 
 
 
+@PageFormBuilder({
+  jsonName: 'config/home.json'
+})
+export default class Home{
 
-
-export default class Home extends FormBuilder{
-
-
-
-
-  render() {
-    return (
-      <div>
-        <h2>Home</h2>
-      </div>
-    );
+  getName() {
+    
   }
 
 }

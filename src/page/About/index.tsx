@@ -1,26 +1,16 @@
-import { FormBuilder } from "../../dynamic/builder";
-import React, { useReducer, useContext, createContext } from 'react';
-import { useFormBuilder } from "./form-builder";
-
+// import { FormBuilder } from ".";
+import React, { createContext } from 'react';
+import PageFormBuilder from "../../dynamic/builder/pageFormbuilder";
 
 
 export const Context = createContext({});
-export default function About(props: any){
 
-  const children: React.ReactNode = useFormBuilder({
-    jsonName: 'config/app.json',
-    viewModel: {
-      premium: 333
-    }
-  }, props);
-
-  const [state, dispatch]: [any, any] = useReducer(() => {}, props.initialState || 0, () => ({count: 10}));
+@PageFormBuilder({
+  jsonName: 'config/about.json'
+})
+export default class About{
 
 
-  return (
-    <Context.Provider value={{state, dispatch}}>
-      { children }
-    </Context.Provider>
-  );
+
 }
   
