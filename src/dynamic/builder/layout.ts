@@ -13,8 +13,23 @@ function loadSource(json: any) {
     return json.map((item: any) => {
         try {
             return {
-                comment: data[item.type],
-                field: item
+                Element: data[item.type],    
+                field: item,
+                instance: null,
+                Event: null,
+                data: {},
+                value: null,
+                isFocus: false,
+                isShow: false,
+                isDisabled: false,
+                isReadOnly: false,
+                isRequired: false,
+                isError: false,
+                isValid: false,
+                isValidError: false,
+                isValidSuccess: false,
+                isValidWarning: false,
+                isValidInfo: false
             };
 
         } catch (error) {

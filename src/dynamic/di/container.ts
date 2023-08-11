@@ -7,14 +7,14 @@ export default class Container {
    */
   components = new Map<string, any>(); // key ->  Constructor
   instances = new Map<string, object>(); // key -> Instance
-  functions = (alias: any, target: any, action: any) => {};
+  functions = (action: any) => {};
   
   /**
    * 注册组件
    * @param constructor 被装饰的类的构造函数
    * @param alias 该组件的名字，默认取类名
    */
-  regist(constructor: Function, alias?: string) {
+  register(constructor: Function, alias?: string) {
     let name = alias;
     if (!name) {
       name = constructor.name;
@@ -23,7 +23,7 @@ export default class Container {
       console.warn("重复注册Component: " + name);
     }
     this.components.set(name, constructor);
-    console.log(this);
+    // console.log(this);
   }
 
   cacheFunction(constructor: any) {

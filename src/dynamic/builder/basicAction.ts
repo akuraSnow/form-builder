@@ -1,6 +1,5 @@
 
-import { AutoWired, Component } from '../di/component';
-import AboutAction from '../../page/About/about.component';
+
 import { getLayOut } from './layout';
 
 
@@ -9,7 +8,9 @@ export default class BasicAction{
     data: any;
 
     private cacheData: any = new Map();
+    private viewModel: any = new Map();
     static instances: any = null;
+
 
     private handler = {
         get(target: any, prop: any) {
@@ -27,6 +28,13 @@ export default class BasicAction{
     }
     
 
+    init(target: any, alias: any) {
+        // console.log('target: ', target);
+        // console.log('viewModel: ', viewModel);
+        return new Proxy(this, this.handler);
+    }
+    
+
     async fetchData(jsonName: string) {
 
         let json = {fields: []};
@@ -40,9 +48,6 @@ export default class BasicAction{
                 viewModel
             });
         }
-
-
-
 
         console.log('this.cacheData: ', this.cacheData);
         // console.log('viewModel: ', viewModel);

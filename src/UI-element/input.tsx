@@ -1,22 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Input as FormInput } from 'antd';
 
 export default function Input(props: any) {
-    console.log('props: ', props);
+    // console.log('props: ', props);
 
-    const { children, field: { id, label, viewModel, dataBinding: {path} } } = props;
-    console.log('viewModel: ', viewModel);
-    // console.log('field: ', dataBinding);
-    // const value = viewModel[path]
-    // console.log('dataBinding: ', dataBinding);
+    const { viewModel, field: { id, label, dataBinding: { path } } } = props;
     // console.log('viewModel: ', viewModel);
-    // console.log('value: ', value);
 
-    useEffect(() => {
 
-    }, [viewModel[path]])
+    // const { attribute, event, control: { instance, value } } = props;
 
-    
-
-    return (  <FormInput defaultValue="26888888" />)
+    return (
+    <FormInput
+        // res={instance}
+        // value={value}
+        // {...attribute}
+        // {...event}
+    />);
 }

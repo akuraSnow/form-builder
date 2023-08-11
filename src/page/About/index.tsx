@@ -10,6 +10,17 @@ export const Context = createContext({});
 })
 export default class About{
 
+  viewMode: any;
+
+  constructor(props: any){
+
+    this.viewMode = {
+      premium: 123432
+    }
+  }
+
+
+  
 
 
 }
