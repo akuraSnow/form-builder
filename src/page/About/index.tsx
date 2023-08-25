@@ -17,10 +17,24 @@ export default class About{
     this.viewMode = {
       premium: 123432
     }
+
+    console.log(this)
+
+  }
+
+  getName() {
+    console.log(222)
+  }
+  readying(data: any) {
+    console.log('data: ', data);
+
   }
 
 
-  
+  readyHandleViewModel() {
+    console.log(222)
+  }
+
 
 
 }

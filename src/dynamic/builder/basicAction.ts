@@ -8,7 +8,6 @@ export default class BasicAction{
     data: any;
 
     private cacheData: any = new Map();
-    private viewModel: any = new Map();
     static instances: any = null;
 
     

@@ -34,27 +34,12 @@ export class RegisterFormBuilder {
 export const registerFormBuilder = new RegisterFormBuilder();
 
 
-
-// const statue = {
-//   readying
-//   componentWillMount
-//   componentDidMount
-//   componentWillUpdate
-//   componentDidUpdate
-//   componentWillUnmount
-//   componentDidCatch
-// }
-
-
 export default function PageFormBuilder(alias: any): any {
 
   return (target: any): any => {
     return () => {
-
-      const action = BasicAction.getInstance();
-      // action.init(target, alias);
       const source = new Observable((observer: any) => {
-        return createClassForStatus(target, alias, observer);
+        createClassForStatus(target, alias, observer);
       });
 
       return iocContainer.functions(source);

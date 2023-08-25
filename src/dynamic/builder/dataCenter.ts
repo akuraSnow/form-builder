@@ -2,6 +2,7 @@
 
 export class DataCenter {
 
+
     
     static viewModel: any;
     private handler = {
@@ -19,17 +20,25 @@ export class DataCenter {
         }
     }
 
-    static init(json: any) {
-        console.log('json: ', json);
 
-        return this.mapPathValue(json, {});
+    constructor() {
+
+        console.warn(this)
     }
 
-    static mapPathValue(json: any, viewModel: any) {
+    init(viewClass: any) {
+        console.log('viewClass: ', viewClass);
+
+
+        // return this.mapPathValue(json, {});
+        
+    }
+
+    mapPathValue(json: any, viewModel: any) {
 
         let newViewModel: any = viewModel;
 
-        json.forEach((item: any) => {  
+        json.forEach((item: any) => { 
             if (Array.isArray(item) ) {
                 newViewModel = this.mapPathValue(item, viewModel);
             } else {
