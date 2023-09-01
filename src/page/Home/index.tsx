@@ -15,11 +15,18 @@ export default class Home{
     // console.log('Home');
     this.viewModel = {premium: 111}
 
-    console.warn('2323233333333333333')
+    setTimeout(() =>{
+      // this.viewModel = {premium: 2222}
+      this.viewModel.premium = 'rer';
+    }, 2000)
   }
 
   getName() {
     console.log(222)
+  }
+
+  getViewModel() {
+    console.log(this.viewModel);
   }
 
 

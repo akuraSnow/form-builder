@@ -1,3 +1,4 @@
+import { Observable } from "../rx";
 import BasicAction from "./basicAction";
 
 
@@ -14,21 +15,20 @@ import BasicAction from "./basicAction";
 
 
 export class HandleLifeCycle {
-  private observer: any;
+  private observer: any = new Observable(() => {});
   private alias: any;
   private data: any;
   private status: any;
 
   constructor() { }
 
-  private _ready_handle_view_model(alias: any, observer: any) {
+  _ready_handle_load_json(alias: any, observer: any) {
     this.observer = observer;
     this.alias = alias;
 
     this._setStatus("readying", []);
     return this._fetchData().then((res) => {
-      console.log(this);
-      this._setStatus("componentWillMount", res);
+      // this._setStatus("componentWillMount", res);
       return res;
     });
   }

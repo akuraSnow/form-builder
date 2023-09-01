@@ -1,67 +1,59 @@
 
-
-import data from '../../UI-element/index';
+import { iocContainer } from './pageFormbuilder';
 import util from './util';
 import _ from 'lodash';
-const utilFunction = new util();
+class Layout{ 
 
-function loadSource(json: any) {
-    if (!json || Object.keys(json).length === 0) {
-        return [];
-    }
+    loadSource(json: any, viewModel: any) {
 
-    return json.map((item: any) => {
-        try {
-            return {
-                Element: data[item.type],    
-                field: item,
-                instance: null,
-                Event: null,
-                data: {},
-                value: null,
-                isFocus: false,
-                isShow: false,
-                isDisabled: false,
-                isReadOnly: false,
-                isRequired: false,
-                isError: false,
-                isValid: false,
-                isValidError: false,
-                isValidSuccess: false,
-                isValidWarning: false,
-                isValidInfo: false
-            };
-
-        } catch (error) {
-            console.log('error: ', error);
-        } 
-    })
-
-}
-
-
-function normalizeFormConfig(fields: any) {
-
-    const contentList: any = [];
-    const result = _.groupBy(fields, (item: any, index: number) => {
-        return item.field.layoutDefinition.row;
-    });
-
-    for (const key in result) {
-        if (Object.prototype.hasOwnProperty.call(result, key)) {
-            const element = result[key];
-            contentList.push(_.sortBy(element, (item: any) => {
-                return item.field.layoutDefinition.column;
-            }))
+        let newJson = [];
+        if (json && Object.keys(json).length !== 0) {
+            newJson = json.map((item: any) => {
+                try {
+                    return {
+                        Element: iocContainer.components.get(item.type),    
+                        field: item,
+                        instance: null,
+                        Event: null,
+                        data: {}
+                    };
+        
+                } catch (error) {
+                    console.log('error: ', error);
+                } 
+            })
         }
+
+        return this.normalizeFormConfig(newJson);
+    
     }
-    return contentList;
+
+
+    update() {
+        console.log(222);
+        // this._value = 222;
+    }
+    
+    normalizeFormConfig(fields: any) {
+    
+        const contentList: any = [];
+        const result = _.groupBy(fields, (item: any, index: number) => {
+            return item.field.layoutDefinition.row;
+        });
+    
+        for (const key in result) {
+            if (Object.prototype.hasOwnProperty.call(result, key)) {
+                const element = result[key];
+                contentList.push(_.sortBy(element, (item: any) => {
+                    return item.field.layoutDefinition.column;
+                }))
+            }
+        }
+        return contentList;
+    }
 }
 
+export const LayoutElement =  new Layout();
 
-export function getLayOut(json: any){
-    const newFields = loadSource(json.fields);
-    const content = normalizeFormConfig(newFields)
 
-    return content;
-}
+

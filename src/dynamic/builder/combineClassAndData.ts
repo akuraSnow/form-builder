@@ -2,81 +2,63 @@ import BasicAction from "./basicAction";
 import "reflect-metadata";
 import { DataCenter } from "./dataCenter";
 import { HandleLifeCycle } from "./handleLifeCycle";
-
+import { Publisher } from "./subscribe";
 
 
 export function createClassForStatus(target: any, alias: any, observer: any) {
-  
+  class test extends Mixin(target, HandleLifeCycle, DataCenter) {
+    [x: string]: any;
 
-  class B extends target{
-    constructor() {
-      super()
+    private handler: any = {
+      get(target: any, prop: any) {
+        if (prop in target) {
+          //如果词典中有该短语
+          return target[prop]; // 返回其翻译
+        } else {
+          // 否则返回未翻译的短语
+          return prop;
+        }
+      },
+      set(target: any, prop: any, val: any) {
+        Publisher.setState(target, val, prop)
+        target[prop] = val;
+        return true;
+      },
+    };;
+
+    constructor(...args: any[]) {
+      super();
+
+      this.viewModel = this.handleViewModel(this.viewModel, this.handler);
+      this.handleLifeCycleForJson(args);
+    }
+
+
+
+    private async handleLifeCycleForJson(args: any) {
+      const jsonList = await this._ready_handle_load_json(...args);
+
+      this.handleDataCenter(jsonList);
+    }
+
+    private handleDataCenter(jsonList: any) {
+
+      const content = this._init_view_model(jsonList, this.viewModel);
+
+      this._setStatus("componentDidMount", content);
     }
   }
 
-  // class test extends Mixin(HandleLifeCycle, DataCenter, target){
-  //   [x: string]: any;
-  //   constructor(...args: any[]) {
-  //     super();
-
-  //     this._ready_handle_view_model(...args).then((res: any) => {
-  //       console.log('res: ', res);
-
-  //       // this
-
-  //     });
-
-  //     // setTimeout(() => {
-  //     //   this._setStatus("componentWillMount", []);
-  //     // }, 3000)
-
-  //   }
-
-
-
-  // }
-
-  const app1 = ClassMixin(B, HandleLifeCycle, DataCenter)
-  console.log('app1: ', new app1());
-
-  // console.log('111',  new B());
-  console.log('111',  new DataCenter());
-
-  // const app: any = new test(alias, observer);
-  // console.log('target: ', app);
-
+  const app: any = new test(alias, observer);
   // return app;
 }
 
-function ClassMixin(...mixins: any) {
-
-  class Mix {
-
-  }
-
-  return mixins.reduce((prev: any, next: any) => {
-    return prev;
-  }, Mix)
-}
-
-
-function Mixin<T extends any[]>(...mixins: T) {
-  console.log('mixins: ', mixins);
-
-  class Mix{
-    constructor(...args: any[]){
-      // if (super) {
-      //   super(...args)
-      // }
-      // super(...args)
-    }
-  }
-  //...
+function Mixin<T extends any[]>(target: any, ...mixins: T) {
   const mergeDesc: any = {};
-  const allowMergeKeys: any = ['init', 'same'];
+  const allowMergeKeys: any = ["init", "same"];
   function copyProperties(target: any, source: any) {
     for (let key of Object.getOwnPropertyNames(source)) {
-      if (key !== 'constructor' && key !== 'prototype' && key !== 'name') {
+      if (key !== "constructor" && key !== "prototype" && key !== "name") {
         let desc: any = Object.getOwnPropertyDescriptor(source, key);
         if (allowMergeKeys.includes(key as string)) {
           mergeDesc[key] = mergeDesc[key] || [];
@@ -87,10 +69,10 @@ function Mixin<T extends any[]>(...mixins: T) {
       }
     }
   }
-  //...
+
   for (const key in mergeDesc) {
     const fns = mergeDesc[key];
-    Object.defineProperty(Mix.prototype, key, {
+    Object.defineProperty(target.prototype, key, {
       configurable: true,
       enumerable: true,
       writable: true,
@@ -102,39 +84,12 @@ function Mixin<T extends any[]>(...mixins: T) {
       },
     });
   }
+
   for (let mixin of mixins) {
-    copyProperties(Mix, mixin); // 拷贝静态属性
-    copyProperties(Mix.prototype, mixin.prototype); // 拷贝原型属性
-    copyProperties(Mix.prototype, mixin.prototype.__proto__); // 拷贝继承的原型属性
-    Mix.prototype.constructor = mixin.prototype.constructor;
+    copyProperties(target, mixin); // 拷贝静态属性
+    copyProperties(target.prototype, mixin.prototype); // 拷贝原型属性
+    copyProperties(target.prototype, mixin.prototype.__proto__); // 拷贝继承的原型属性
   }
-  return Mix;
-}
 
-
-
-const copyProperties = (target: any,source: any)=>{ //加一个拷贝函数，用来拷贝传入的所有class的静态，及其prototype。
-  Object.getOwnPropertyNames(source).concat(Object.getOwnpropertySymbols(source)).forEach((prop: any)=>{
-  // 过滤条件
-      if(!prop.match(/^(?:constructor|protype|arguments|name))){
-        Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))
-      }
-  })
-}
-
-
-// 创建Mixins主体
-const Mixins = (BaseClass: any, ...mixins: any)=>{
-  // 创建一个基础Base。将其他mixin与其绑定
-  class Base extends BaseClass{
-      constructor(...props: any){
-          super(...props)
-      }
-  }
-  // 将其余需要被继承的class 与Base绑定。其类及其prototype
-  mixins.forEach((mixin: any) => {
-      copyProperties(Base, mixin)
-      copyProperties(Base.prototype, mixin.prototype)
-  })
-  return Base
+  return target;
 }

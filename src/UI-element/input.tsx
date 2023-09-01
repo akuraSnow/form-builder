@@ -1,19 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Input as FormInput } from 'antd';
 
 export default function Input(props: any) {
-    // console.log('props: ', props);
 
-    const { viewModel, field: { id, label, dataBinding: { path } } } = props;
-    // console.log('viewModel: ', viewModel);
+    const { control, listener, instance, field: { id, label, dataBinding: { path } } } = props;
+
+    const [value, setValue] = useState(control.value);
+
+    useEffect(() => {
+
+        listener.callBack(({value}: any) => {
+            setValue(value)
+        })
+    }, [])
 
 
-    // const { attribute, event, control: { instance, value } } = props;
-
+     
     return (
     <FormInput
+        // ref={childRef}
         // res={instance}
-        // value={value}
+        value={value}
         // {...attribute}
         // {...event}
     />);

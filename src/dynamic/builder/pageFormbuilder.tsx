@@ -4,8 +4,8 @@ import { Observable, map } from "../rx/index";
 
 import { DataCenter } from './dataCenter';
 import { createClassForStatus } from "./combineClassAndData";
+import { Component } from './subscribe';
 
-const iocContainer = new Container();
 
 
 export class RegisterFormBuilder {
@@ -14,10 +14,10 @@ export class RegisterFormBuilder {
 
   }
 
-  static use(Component: any) {
-    for (const key in Component) {
-      if (Object.prototype.hasOwnProperty.call(Component, key)) {
-        const element = Component[key];
+  static use(Components: any) {
+    for (const key in Components) {
+      if (Object.prototype.hasOwnProperty.call(Components, key)) {
+        const element = Components[key];
         iocContainer.register(element, key);
       }
     }
@@ -31,6 +31,7 @@ export class RegisterFormBuilder {
 
 }
 
+export const iocContainer = new Container();
 export const registerFormBuilder = new RegisterFormBuilder();
 
 
@@ -42,7 +43,7 @@ export default function PageFormBuilder(alias: any): any {
         createClassForStatus(target, alias, observer);
       });
 
-      return iocContainer.functions(source);
+      return iocContainer.functions(source, Component);
     };
   };
 };

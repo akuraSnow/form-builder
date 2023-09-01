@@ -1,31 +1,36 @@
 
 
 import React, { Fragment, useEffect, useState } from "react";
-import { getLayOut } from "../dynamic/builder/layout";
 import './index.css'
 
-
-export default function RenderProvider(source: any) {
+export default function RenderProvider(source: any, Component: any) {
 
     const [children, setChildren] = useState([]);
+
   
     useEffect(() => {
       source.subscribe({
         next: (v: any) => {
           console.log('v: ', v);
-          setChildren(v.data)
+          setChildren(v.data);
         }
       });
   
     }, []);
 
+    
+
     const columns = (item: any, index: number): React.ReactNode => {
       return item.map((ElementList: any, i: number) => {
-        const { Element, field } =  ElementList;
+        const { Element, field, control } =  ElementList;
         const { layoutDefinition: { columnSpan = 1 }} = field;
 
         return <div className={`grid-item-${columnSpan}`} key={`${index}-${i}`.toString()}>
-          <Element field={field} />
+          { Component.render((res: any) => {
+
+            console.log('```````````````')
+            return <Element field={field} control={control} listener={res}/>
+          })} 
         </div>;
      })
     }

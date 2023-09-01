@@ -7,7 +7,7 @@ export default class Container {
    */
   components = new Map<string, any>(); // key ->  Constructor
   instances = new Map<string, object>(); // key -> Instance
-  functions = (action: any) => {};
+  functions = (action: any, func:any) => {};
   
   /**
    * 注册组件

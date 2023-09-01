@@ -19,6 +19,9 @@ export default class About{
     }
 
     console.log(this)
+    setTimeout(() => {
+      this.viewMode.premium = '1111'
+    }, 2000)
 
   }
 
