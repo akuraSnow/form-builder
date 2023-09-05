@@ -1,11 +1,11 @@
-import Container from "../di/container";
-import BasicAction from "./basicAction";
-import { Observable, map } from "../rx/index";
+// import { Container } from "../utility/index";
+// import { Observable } from "../../rx/index";
 
 import { DataCenter } from './dataCenter';
 import { createClassForStatus } from "./combineClassAndData";
-import { Component } from './subscribe';
-
+import { Component } from '../plugin/subscribe';
+import Container from '../utility/di/container';
+import { Observable } from '../utility/rx';
 
 
 export class RegisterFormBuilder {
@@ -18,10 +18,21 @@ export class RegisterFormBuilder {
     for (const key in Components) {
       if (Object.prototype.hasOwnProperty.call(Components, key)) {
         const element = Components[key];
-        iocContainer.register(element, key);
+        iocContainer.registerComponent(element, key);
       }
     }
 
+    return this;
+  }
+
+  static extends(fnList: any) {
+
+    for (const key in fnList) {
+      if (Object.prototype.hasOwnProperty.call(fnList, key)) {
+        const element = fnList[key];
+        iocContainer.registerExtension(element, key);
+      }
+    }
     return this;
   }
 

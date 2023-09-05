@@ -1,7 +1,7 @@
 
 
 export default function Html(props: any) {
-    // console.log('props: ', props);
+    console.log('props: ', props);
     const { instance, field= { label: ''} } = props;
 
     function initial() {

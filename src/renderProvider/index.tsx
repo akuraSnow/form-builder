@@ -1,6 +1,7 @@
 
 
 import React, { Fragment, useEffect, useState } from "react";
+import UnitComponent from './component';
 import './index.css'
 
 export default function RenderProvider(source: any, Component: any) {
@@ -15,22 +16,14 @@ export default function RenderProvider(source: any, Component: any) {
           setChildren(v.data);
         }
       });
-  
     }, []);
-
-    
 
     const columns = (item: any, index: number): React.ReactNode => {
       return item.map((ElementList: any, i: number) => {
-        const { Element, field, control } =  ElementList;
-        const { layoutDefinition: { columnSpan = 1 }} = field;
+        const { layoutDefinition: { columnSpan = 1 }} = ElementList.field;
 
         return <div className={`grid-item-${columnSpan}`} key={`${index}-${i}`.toString()}>
-          { Component.render((res: any) => {
-
-            console.log('```````````````')
-            return <Element field={field} control={control} listener={res}/>
-          })} 
+         <UnitComponent Component={Component} ElementList={ElementList}/>
         </div>;
      })
     }

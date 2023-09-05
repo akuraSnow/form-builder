@@ -3,25 +3,21 @@ import { Input as FormInput } from 'antd';
 
 export default function Input(props: any) {
 
-    const { control, listener, instance, field: { id, label, dataBinding: { path } } } = props;
+    const { control, instance, field: { id, label, dataBinding: { path } } } = props;
+    console.log('control: ', control);
 
     const [value, setValue] = useState(control.value);
 
     useEffect(() => {
-
-        listener.callBack(({value}: any) => {
-            setValue(value)
-        })
-    }, [])
-
+        setValue(control.value);
+        console.log('control.value: ', control.value);
+    }, [control.value])
 
      
-    return (
-    <FormInput
-        // ref={childRef}
-        // res={instance}
-        value={value}
+    return ( <FormInput
+        defaultValue={value}
+        value={control.value}
         // {...attribute}
-        // {...event}
+        {...control.event}
     />);
 }

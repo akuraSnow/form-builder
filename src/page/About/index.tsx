@@ -1,6 +1,6 @@
 // import { FormBuilder } from ".";
 import React, { createContext } from 'react';
-import PageFormBuilder from "../../dynamic/builder/pageFormbuilder";
+import PageFormBuilder from "../../dynamic/builder";
 
 
 export const Context = createContext({});

@@ -1,5 +1,6 @@
-import { Observable } from "../rx";
-import BasicAction from "./basicAction";
+
+import BasicAction from "../plugin/basicAction";
+import { Observable } from "../utility";
 
 
 // const statue = {

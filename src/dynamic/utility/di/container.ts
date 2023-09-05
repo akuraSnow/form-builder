@@ -6,6 +6,7 @@ export default class Container {
    * instances维护实例列表
    */
   components = new Map<string, any>(); // key ->  Constructor
+  extension = new Map<string, any>(); // key ->  Constructor
   instances = new Map<string, object>(); // key -> Instance
   functions = (action: any, func:any) => {};
   
@@ -14,7 +15,7 @@ export default class Container {
    * @param constructor 被装饰的类的构造函数
    * @param alias 该组件的名字，默认取类名
    */
-  register(constructor: Function, alias?: string) {
+  registerComponent(constructor: Function, alias?: string) {
     let name = alias;
     if (!name) {
       name = constructor.name;
@@ -23,11 +24,23 @@ export default class Container {
       console.warn("重复注册Component: " + name);
     }
     this.components.set(name, constructor);
-    // console.log(this);
   }
 
-  cacheFunction(constructor: any) {
-    this.functions = constructor;
+  cacheFunction(fns: any) {
+    this.functions = fns;
+  }
+
+  registerExtension(fn: any, alias: any) {
+
+    let name = alias;
+    if (!name) {
+      name = fn.name;
+    }
+    if (this.extension.has(name)) {
+      console.warn("重复注册extension: " + name);
+    }
+    this.extension.set(name, fn);
+
   }
 
   /**

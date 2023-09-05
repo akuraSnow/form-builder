@@ -5,15 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { RegisterFormBuilder } from "./dynamic/builder/pageFormbuilder";
+import { RegisterFormBuilder } from "./dynamic/builder";
 import RenderProvider from './renderProvider/index'
 import data from "./UI-element/index";
+import extensionFun from "./extension";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-RegisterFormBuilder.use(data).render(RenderProvider);
+RegisterFormBuilder.use(data).extends(extensionFun).render(RenderProvider);
 
 root.render(
   <BrowserRouter>

@@ -1,7 +1,7 @@
 // import { FormBuilder } from "../About";
 
 
-import PageFormBuilder from "../../dynamic/builder/pageFormbuilder";
+import PageFormBuilder from "../../dynamic/builder";
 
 
 

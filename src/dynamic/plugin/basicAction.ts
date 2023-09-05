@@ -20,11 +20,7 @@ export default class BasicAction{
             this.cacheData.set(jsonName, json);
         }
         return Promise.resolve(json);
-      
     }
-
-
-
 
     static getInstance() {
         if (!this.instances) {
@@ -32,7 +28,6 @@ export default class BasicAction{
             this.instances = action;
             return action;
         }
-
         return this.instances;
     }
 }

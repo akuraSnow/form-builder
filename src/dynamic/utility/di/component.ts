@@ -8,7 +8,7 @@ const iocContainer = new Container();
 export function Component(alias?: any) {
   console.warn('alias: ', alias);
   return function (target: any) {
-    iocContainer.register(target, alias || target.name);
+    iocContainer.registerComponent(target, alias || target.name);
     return target;
   };
 }
