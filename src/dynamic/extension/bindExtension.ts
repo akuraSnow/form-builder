@@ -4,13 +4,12 @@ import { iocContainer } from "../builder";
 export class BasicExtension{ 
 
     
-    static _bind_extension_foreach(content: any, viewModel: any) {
-
+    static _bind_extension_foreach(content: any, viewModel: any, target: any) {
         const extensions = iocContainer.extension;
         const extensionFnList = [];
         for (const key of extensions) {
             const el = iocContainer.extension.get(key[0]);
-            extensionFnList.push(new el(content, viewModel));
+            extensionFnList.push(new el(content, viewModel, target));
         }
 
 

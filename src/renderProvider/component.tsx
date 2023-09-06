@@ -10,7 +10,6 @@ export default function UnitComponent(props: any) {
   
   useEffect(() => {
     const observable = Component.subscript(field, (res: any) => {
-      console.log('res: ', res);
       handleForceupdateMethod();
     });
 

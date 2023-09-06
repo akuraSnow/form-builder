@@ -8,23 +8,23 @@ class EmitObserver extends Observer {
     constructor(field: any,fn?: any) {
         super();
         this.field = field;
-        this.renderFunctionList.push(fn);
+        this.renderFunctionList = fn;
     }
 
-    update(self: any): void {
-        const fn = this.renderFunctionList;
-        for (let index = 0; index < fn.length; index++) {
-            const el = fn[index];
-            if (this.shouldBeChange(self)) {
-                el({field:  this.field, viewModel: self.state.viewModel}); 
-            }
-            
+    update(self: any, path?: any): void {
+
+        if (this.shouldBeChange(self, path)) {
+            this.renderFunctionList({field:  this.field, viewModel: self.state.viewModel}); 
         }
     }
 
-    shouldBeChange(self: any) {
+    updateById(self: any, id: string) {
+        if (id === this.field.id) {
+            this.renderFunctionList({field:  this.field, viewModel: self.state.viewModel}); 
+        }
+    }
 
-        const { value, viewModel, path } = self.getState();
+    shouldBeChange(self: any, path?: any) {
         const { dataBinding: { path: filedPath = ''} = {} }= this.field;
         return path === filedPath;
     }
@@ -45,6 +45,7 @@ export class ComponentObserver {
         const emit = new EmitObserver(item, fn);
         Publisher.add(emit);
     }
+
 
     changeState(newState: any) {
         this.state = newState;
@@ -79,10 +80,41 @@ class ViewModelPublisher extends Subject {
 		return this.state
 	}
 
-	setState(viewModel: any, value: any, path?: string) {
-        this.state = { viewModel, value, path };
-        this.notify()
+	setState(viewModel: any, value: any, path: string) {
+
+        const newPath = viewModel.__path__+ `${viewModel.__path__ && '.'}`+path
+        this.state = { viewModel, value };
+        this.publishState(value, newPath);
+
 	}
+
+    publishState(value: string | Object | any, path: string) {
+
+
+        if (Object.prototype.toString.call(value) === '[object Object]'){
+            for (const key in value) {
+                if (Object.prototype.hasOwnProperty.call(value, key)) {
+                    this.publishState(value[key], `${path}.${key}`);
+                    
+                }
+            }
+        }
+        this.notify(path);
+    }
+
+    // 通知所有订阅者
+    notify(path?: any) {
+        this.observers.forEach((observer) => {
+            observer.update(this, path);
+        });
+    }
+
+    notifyById(viewModel: any, value: any, id?: any) {
+        this.state = { viewModel, value };
+        this.observers.forEach((observer) => {
+            observer.updateById(this, id);
+        });
+    }
 
 }
 

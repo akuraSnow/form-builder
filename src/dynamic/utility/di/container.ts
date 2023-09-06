@@ -58,7 +58,7 @@ export default class Container {
     }
     const ins = new component();
     this.instances.set(alias, ins);
-    console.log(this);
+
     return ins;
   }
 

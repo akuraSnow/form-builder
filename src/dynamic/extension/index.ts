@@ -5,23 +5,21 @@ export class Extend {
 
     viewModel: any;
     content: any;
+    target: any;
 
-    constructor(content: any, viewModel: any) {
+    constructor(content: any, viewModel: any, target: any) {
         this.viewModel = viewModel;
         this.content = content;
+        this.target = target
     }
 
-    invoke(content: any){  
-        const newContent = content.map((contentField: any) => {
+    async invoke(content: any){  
+        const newContent = await Promise.all( content.map(async(contentField: any) => {
+            return await Promise.all(contentField.map(async(field: any) => {
+                return await this.execute(field);
+            }))
+        })) 
 
-            if (Array.isArray(contentField)) {
-                contentField = this.invoke(contentField);
-            } else {
-                contentField = this.execute(content);
-            }
-            return contentField;
-        })
-        console.log('newContent: ', newContent);
         return Promise.resolve(newContent);
     }
 
