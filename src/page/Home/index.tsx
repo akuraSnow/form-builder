@@ -1,7 +1,7 @@
 // import { FormBuilder } from "../About";
 
 
-import PageFormBuilder from "../../dynamic/builder/pageFormbuilder";
+import PageFormBuilder from "../../dynamic/builder";
 
 
 
@@ -12,14 +12,16 @@ export default class Home{
   [x: string]: any;
 
   constructor() {
-    // console.log('Home');
+
     this.viewModel = {premium: 111}
 
-    console.warn('2323233333333333333')
+
   }
 
-  getName() {
-    console.log(222)
+
+  getInputAction() {
+
+    return '我是一个大写的人'
   }
 
 

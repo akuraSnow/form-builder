@@ -1,7 +1,13 @@
 
 .grid-container{
+    padding: 10px;
     display: grid;
     grid-template-columns: repeat(12, 8.33%);
+}
+
+.align-items-center{
+    display: flex;
+    align-items: center;
 }
 
 .grid-item-1 {

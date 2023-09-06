@@ -13,7 +13,9 @@
                 "path": "premium",
                 "converter": "convertLblPaymentAmount",
                 "mode": "modelToView"
-            }
+            },
+            "visibility": "hidden",
+            "checkVisibility": "checkHtml"
         },
         {
             "id": "input",
@@ -31,7 +33,17 @@
             },
             "css": {
                 "container": "font-14-lh-16"
-            }
+            },
+            "action": {
+                "onchange": {
+                    "name": "changeShukuang",
+                    "params": {
+                        "value": "value"
+                    }
+                }
+            },
+            "visibility": "hidden",
+            "checkVisibility": "checkHtml"
         },
         {
             "id": "html",
@@ -74,6 +86,53 @@
                 "row": 2,
                 "column": 8,
                 "columnSpan": 4
+            }
+        },
+        {
+            "id": "select",
+            "type": "select",
+            "dataSource": "loadCountry",
+            "dataBinding": {
+                "path": "application.country.code",
+                "converter": "convertLblPaymentAmount"
+            },
+            "label": "<div>2-8<div>",
+            "layoutDefinition": {
+                "row": 2,
+                "column": 8,
+                "columnSpan": 4
+            },
+            "action": {
+                "onchange": {
+                    "name": "changeSelect",
+                    "params": {
+                        "value": "value"
+                    }
+                }
+            }
+        },
+        {
+
+            "id": "select",
+            "type": "select",
+            "dataSource": "loadCountry",
+            "dataBinding": {
+                "path": "application.country.name",
+                "converter": "convertLblPaymentAmount"
+            },
+            "label": "<div>2-8<div>",
+            "layoutDefinition": {
+                "row": 5,
+                "column": 8,
+                "columnSpan": 4
+            },
+            "action": {
+                "onchange": {
+                    "name": "changeSelect",
+                    "params": {
+                        "value": "value"
+                    }
+                }
             }
         }
     ]

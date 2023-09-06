@@ -1,7 +1,5 @@
 
 
-import { getLayOut } from './layout';
-
 
 export default class BasicAction{
 
@@ -21,12 +19,8 @@ export default class BasicAction{
             json = await fetch(jsonName).then(res => res.json());
             this.cacheData.set(jsonName, json);
         }
-        return Promise.resolve(getLayOut(json));
-      
+        return Promise.resolve(json);
     }
-
-
-
 
     static getInstance() {
         if (!this.instances) {
@@ -34,7 +28,6 @@ export default class BasicAction{
             this.instances = action;
             return action;
         }
-
         return this.instances;
     }
 }
