@@ -15,13 +15,16 @@ export default class Home{
 
     this.viewModel = {premium: 111}
 
-
   }
 
 
   getInputAction() {
 
     return '我是一个大写的人'
+  }
+
+  getViewModel() {
+    console.log(this.viewModel);
   }
 
 

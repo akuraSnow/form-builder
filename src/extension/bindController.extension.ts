@@ -1,7 +1,5 @@
-import { get } from "lodash";
 import { Extend } from "../dynamic/extension";
-import _ from "lodash";
-import { Publisher } from "../dynamic/plugin";
+import { get, set } from "lodash";
 
 
 export default class BindController extends Extend{
@@ -10,10 +8,6 @@ export default class BindController extends Extend{
         contentField.control = new Control(contentField.field, this.viewModel, this.target);
         return contentField;
     }
-
-
-
-    
 }
 
 
@@ -36,11 +30,9 @@ class Control {
 
                 const value = (val.target && val.target.value) || val;
 
-                _.set(this._viewModel, this.field.dataBinding.path, value);
-                console.log('value: ', value);
-                console.log('this.field.dataBinding.path: ', this.field.dataBinding.path);
-                // Publisher.notifyById(this._viewModel, val.target.value, this.field.id);
-                this.publishEvent('onchange')
+                set(this._viewModel, this.field.dataBinding.path, value);
+
+                this.publishEvent('onchange');
             },
             onClick: (res: any) => {
   
@@ -71,7 +63,7 @@ class Control {
 
     get
     value() {
-        return  _.get(this._viewModel, this.field.dataBinding.path);
+        return  get(this._viewModel, this.field.dataBinding.path);
     }
 
     get

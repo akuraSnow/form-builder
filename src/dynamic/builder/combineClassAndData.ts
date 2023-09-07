@@ -1,13 +1,9 @@
-import BasicAction from "../plugin/basicAction";
-import "reflect-metadata";
 import { DataCenter } from "./dataCenter";
 import { HandleLifeCycle } from "./handleLifeCycle";
 import { Publisher } from "../plugin/subscribe";
-import util from "../utility/until";
 import { BasicExtension } from "../extension/bindExtension";
+import util from "../utility/until";
 import _ from "lodash";
-
-
 
 export function createClassForStatus(target: any, alias: any, observer: any) {
   class test extends util.Mixin(target, HandleLifeCycle, DataCenter) {
@@ -23,15 +19,13 @@ export function createClassForStatus(target: any, alias: any, observer: any) {
       },
       set(target: any, prop: any, val: any) {
 
-        if (Object.prototype.toString.call(val) === '[object Object]' && Object.keys(val).toString() !== Object.keys(target[prop]).toString()) {
+        if ((Object.prototype.toString.call(val) === '[object Object]' && Object.keys(val).toString() !== Object.keys(target[prop]).toString())) {
           for (const key in val) {
             if (Object.prototype.hasOwnProperty.call(val, key)) {
               target[prop][key] = val[key]
             }
           }
           
-        } else if (target.__path__) {
-          _.set(target, `${target.__path__}.${prop}`, val);
         } else {
           target[prop] = val;
         }
@@ -47,20 +41,19 @@ export function createClassForStatus(target: any, alias: any, observer: any) {
     }
 
     private async handleLifeCycleForJson(args: any) {
+
+      // 从加载json文件
       const jsonList = await this._ready_handle_load_json(...args);
-
-      this.handleDataCenter(jsonList);
-    }
-
-    private async  handleDataCenter(jsonList: any) {
-
+      // 获取初始化viewModel
       const { content, viewModel} = this._init_view_model(jsonList, this.viewModel);
-      this.viewModel = this.handleViewModel(viewModel, this.handler);
-      console.log('this.viewModel: ', this.viewModel);
-
+      // 把初始化vieModel进行proxy代理
+      this.viewModel = this._handle_view_model(viewModel, this.handler);
+      // 把content文件进行扩展之后传出
       const newContent = await BasicExtension._bind_extension_foreach(content, this.viewModel, this);
+
       this._setStatus("componentDidMount", newContent);
     }
+
   }
 
   return new test(alias, observer);

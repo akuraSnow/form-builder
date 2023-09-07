@@ -3,18 +3,6 @@ import BasicAction from "../plugin/basicAction";
 import { Observable } from "../utility";
 
 
-// const statue = {
-//   readying
-//   componentWillMount
-//   componentDidMount
-//   componentWillUpdate
-//   componentDidUpdate
-//   componentWillUnmount
-//   componentDidCatch
-// }
-
-
-
 export class HandleLifeCycle {
   private observer: any = new Observable(() => {});
   private alias: any;
@@ -26,19 +14,14 @@ export class HandleLifeCycle {
   _ready_handle_load_json(alias: any, observer: any) {
     this.observer = observer;
     this.alias = alias;
+    const action = BasicAction.getInstance();
 
     this._setStatus("readying", []);
-    return this._fetchData().then((res) => {
-      // this._setStatus("componentWillMount", res);
+    return action.fetchData(this.alias.jsonName).then((res: any) => {
       return res;
     });
   }
 
-
-  async _fetchData() {
-    const action = BasicAction.getInstance();
-    return await action.fetchData(this.alias.jsonName);
-  }
 
   _setStatus(status: any, data: any[]) {
     this.data = data;

@@ -8,18 +8,17 @@ export class DataCenter {
     _init_view_model(jsonList: any, viewModel: any = {}) {
 
         const newViewModel = this._get_init_view_model(jsonList.fields, viewModel);
-        const content = this._get_components_from_json(jsonList, newViewModel);
-        // this._bind_control_in_field(content);
+        const content = LayoutElement.loadSource(jsonList.fields, newViewModel);
         return {content, viewModel: newViewModel};
     }
 
-    handleViewModel(viewModel: any = {}, handler: any, path: string = '') {
+    _handle_view_model(viewModel: any = {}, handler: any, path: string = '') {
 
         for (const key in viewModel) {
             if (Object.prototype.hasOwnProperty.call(viewModel, key)) {
                 const element = viewModel[key];
                 if (Object.prototype.toString.call(element) === '[object Object]') {
-                    viewModel[key] = this.handleViewModel(viewModel[key], handler, path + `${path ? '.' : ''}` + key );
+                    viewModel[key] = this._handle_view_model(viewModel[key], handler, path + `${path ? '.' : ''}` + key );
                 }
                 
             }
@@ -27,12 +26,6 @@ export class DataCenter {
 
         viewModel.__path__ = path;
         return new Proxy(viewModel, handler);
-    }
-
-    _get_components_from_json(json: any, viewModel: any) {
-
-        const content = LayoutElement.loadSource(json.fields, viewModel);
-        return content;
     }
 
 
