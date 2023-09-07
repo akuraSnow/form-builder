@@ -4,13 +4,14 @@ import _ from 'lodash';
 class Layout{ 
 
     loadSource(json: any, viewModel: any) {
-
+        console.log('iocContainer: ', iocContainer);
         let newJson = [];
         if (json && Object.keys(json).length !== 0) {
             newJson = json.map((item: any) => {
                 try {
                     return {
                         Element: iocContainer.components.get(item.type),    
+
                         field: item,
                         instance: null,
                         Event: null,

@@ -6,7 +6,8 @@ import PageFormBuilder from "../../dynamic/builder";
 
 
 @PageFormBuilder({
-  jsonName: 'config/home.json'
+  jsonName: 'config/home.json',
+  provider: []
 })
 export default class Home{
   [x: string]: any;
@@ -27,6 +28,14 @@ export default class Home{
     console.log(this.viewModel);
   }
 
+  convertLblPaymentAmount() {
+
+    return {
+      set: (value: any) => {return '$' + value},
+      get: (value: any) => { return value}
+    }
+  }
+ 
 
 }
   

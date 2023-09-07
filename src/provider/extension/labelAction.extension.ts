@@ -1,4 +1,4 @@
-import { Extend } from "../dynamic/extension";
+import { Extend } from "../../dynamic/extension";
 
 export default class labelAction extends Extend{
 
@@ -6,8 +6,8 @@ export default class labelAction extends Extend{
 
         try {
             if (content.field.labelAction) {
-                const list =  await this.target.__proto__[content.field.labelAction].call(this);
-                content.field.label = list;
+                const label =  await this.target.__proto__[content.field.labelAction].call(this);
+                content.field.label = label;
             }
     
             return Promise.resolve(content);

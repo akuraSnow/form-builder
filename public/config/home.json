@@ -23,6 +23,11 @@
                 "path": "premium",
                 "converter": "convertLblPaymentAmount"
             },
+            "validator": [
+                {
+                    "name": "required"
+                }
+            ],
             "layoutDefinition": {
                 "row": 1,
                 "column": 1,

@@ -1,5 +1,4 @@
-import { Extend } from "../dynamic/extension"
-
+import { Extend } from "../../dynamic/extension";
 
 
 export default class loadDataSource extends Extend{

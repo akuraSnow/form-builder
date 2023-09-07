@@ -7,37 +7,46 @@ import { Component } from '../plugin/subscribe';
 import Container from '../utility/di/container';
 import { Observable } from '../utility/rx';
 
-
 export class RegisterFormBuilder {
 
   constructor() {
 
   }
 
-  static use(Components: any) {
-    for (const key in Components) {
-      if (Object.prototype.hasOwnProperty.call(Components, key)) {
-        const element = Components[key];
-        iocContainer.registerComponent(element, key);
-      }
-    }
+  // static use(Components: any) {
+  //   for (const key in Components) {
+  //     if (Object.prototype.hasOwnProperty.call(Components, key)) {
+  //       const element = Components[key];
+  //       iocContainer.registerComponent(element, key);
+  //     }
+  //   }
 
-    return this;
-  }
+  //   return this;
+  // }
 
-  static extends(fnList: any) {
+  static use(extendObject: any) {
 
-    for (const key in fnList) {
-      if (Object.prototype.hasOwnProperty.call(fnList, key)) {
-        const element = fnList[key];
-        iocContainer.registerExtension(element, key);
+    for (const key in extendObject) {
+      if (Object.prototype.hasOwnProperty.call(extendObject, key)) {
+        const element = extendObject[key];
+        for (const k in element) {
+          if (Object.prototype.hasOwnProperty.call(element, k)) {
+            const el = element[k];
+            iocContainer.registerExtension(el, k, key);
+            
+          }
+        }
+
       }
     }
     return this;
   }
 
   static render(fun: Function) {
+    console.log('fun: ', fun);
+    console.log('iocContainer: ', iocContainer);
     iocContainer.cacheFunction(fun);
+
   }
 
 }

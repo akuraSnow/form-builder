@@ -1,6 +1,5 @@
 
 import { LayoutElement } from '../plugin/layout';
-import { iocContainer } from './index';
 
 export class DataCenter {
     viewModel: any;

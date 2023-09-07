@@ -5,41 +5,29 @@ export default class Container {
    * components维护组件列表
    * instances维护实例列表
    */
-  components = new Map<string, any>(); // key ->  Constructor
-  extension = new Map<string, any>(); // key ->  Constructor
-  instances = new Map<string, object>(); // key -> Instance
+  [x: string]: any;
   functions = (action: any, func:any) => {};
   
-  /**
-   * 注册组件
-   * @param constructor 被装饰的类的构造函数
-   * @param alias 该组件的名字，默认取类名
-   */
-  registerComponent(constructor: Function, alias?: string) {
-    let name = alias;
-    if (!name) {
-      name = constructor.name;
-    }
-    if (this.components.has(name)) {
-      console.warn("重复注册Component: " + name);
-    }
-    this.components.set(name, constructor);
-  }
+
 
   cacheFunction(fns: any) {
     this.functions = fns;
   }
 
-  registerExtension(fn: any, alias: any) {
+  registerExtension(fn: any, alias: any, containerName: string) {
 
     let name = alias;
     if (!name) {
       name = fn.name;
     }
-    if (this.extension.has(name)) {
+
+    if (!this[containerName]) {
+      this[containerName] = new Map<string, any>();
+    }
+    if (this[containerName].has(name)) {
       console.warn("重复注册extension: " + name);
     }
-    this.extension.set(name, fn);
+    this[containerName].set(name, fn);
 
   }
 

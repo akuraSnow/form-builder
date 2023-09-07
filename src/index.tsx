@@ -6,15 +6,22 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { RegisterFormBuilder } from "./dynamic/builder";
-import RenderProvider from './renderProvider/index'
-import data from "./UI-element/index";
-import extensionFun from "./extension";
+
+import validator from "./provider/validator";
+import components from "./provider/UI-element";
+import extension from "./provider/extension";
+import RenderProvider from "./provider/renderProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-RegisterFormBuilder.use(data).extends(extensionFun).render(RenderProvider);
+
+RegisterFormBuilder.use({
+  components,
+  extension,
+  validator
+}).render(RenderProvider);
 
 root.render(
   <BrowserRouter>
