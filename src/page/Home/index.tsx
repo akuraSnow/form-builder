@@ -28,13 +28,13 @@ export default class Home{
     console.log(this.viewModel);
   }
 
-  convertLblPaymentAmount() {
+  // convertLblPaymentAmount() {
 
-    return {
-      set: (value: any) => {return '$' + value},
-      get: (value: any) => { return value}
-    }
-  }
+  //   return {
+  //     set: (value: any) => {return value},
+  //     get: (value: any) => { return value}
+  //   }
+  // }
  
 
 }

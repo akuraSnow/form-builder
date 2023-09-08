@@ -1,25 +1,28 @@
-import { useEffect, useState, useRef } from "react";
-import { Button, Checkbox, Form, Input as FormInput} from 'antd';
+import { Form, Input as FormInput } from "antd";
 
 export default function Input(props: any) {
+  const {
+    control: {
+        value,
+        event,
+        errorList
+    },
+    field: {
+      id,
+      label,
+      dataBinding: { path },
+    },
+  } = props;
+  console.log("control: ", path, value);
 
-    const { control, instance, field: { id, label, dataBinding: { path } } } = props;
-    console.log('control: ', path, control.value);
+  const validateStatus = errorList.length === 0 ? "success" : "error";
+  const validateMes = errorList[0] && errorList[0].mes;
 
-     
-    return (
-        <div>
-            <Form>
-                <Form.Item
-                    label={label}
-                >
-                    <FormInput
-                        // defaultValue={control.value}
-                        value={control.value || ''}
-                        // {...attribute}
-                        {...control.event}
-                    />
-                </Form.Item>
-            </Form>
-    </div>);
+  return (
+    <Form>
+      <Form.Item label={label}  validateStatus={validateStatus} help={validateMes}>
+        <FormInput value={value || ""} {...event} />
+      </Form.Item>
+    </Form>
+  );
 }

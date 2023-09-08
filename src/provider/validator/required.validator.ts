@@ -1,10 +1,10 @@
 
 
 
-export default function required(control: any, target: any) {
+export default function required(value: any, target: any) {
     
-    if (!control.value || control.value.toString().trim().length === 0) {
-        return { required: true };
+    if (!value || value.toString().trim().length === 0) {
+        return { mes: '请输入' };
     }
     return null;
 };

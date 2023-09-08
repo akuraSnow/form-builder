@@ -1,6 +1,7 @@
 
 import { get, set } from "lodash";
 import { Extend } from "../../dynamic/extension";
+import { iocContainer } from "../../dynamic/builder";
 
 
 export default class BindController extends Extend{
@@ -30,7 +31,7 @@ class Control {
         this._eventList = {
             onChange: (val: any) => {
 
-                const value = (val.target && val.target.value) || val;
+                const value = val.target ? val.target.value : val;
 
                 this.publishEvent('onchange', value);
             },
@@ -48,7 +49,7 @@ class Control {
     publishEvent(eventType: string, value: any) {
         
         const { action, dataBinding: { path, converter } } = this.field;
-        const newValue = this.converterValue(converter, value, 'set');
+        const newValue = this.converterExtension(converter, value, 'set');
 
         set(this._viewModel, path, newValue);
 
@@ -62,19 +63,43 @@ class Control {
         }
     }
 
-    converterValue(convert: string, value: any, operator: string) {
-        if (!convert) {
+    converterExtension(convertName: string, value: any, operator: string) {
+        if (!convertName) {
             return value;
         }
+        
+        const result = this.findExecuteFunction({
+            name: convertName,
+            value,
+            extensionName: 'converter'
+        }, value);
+        return result === value ? value : result[operator](value);
+    }
+
+    validatorExtension(validatorName: string, value: any) {
+        if (!validatorName) {
+            return null;
+        }
+        return this.findExecuteFunction({
+            name: validatorName,
+            value,
+            extensionName: 'validator'
+        }, null);
+    }
+
+    findExecuteFunction({name, value, extensionName}: any, defaultReturn?: any) {
         try {
-            if (!this.executeAction(convert)[operator]){
-                return value;
+            if (this.target[name]){
+                return this.executeAction(name, this);
+            } else if (iocContainer[extensionName].has(name)) {
+                return iocContainer[extensionName].get(name).call(this, value);
             }
-            return this.executeAction(convert)[operator](value);
+            return defaultReturn;
         } catch (error) {
-            console.error(`未注册对应的函数${convert}, ${error}`);
+            console.error(`未注册对应的函数${name}, ${error}`);
         }
     }
+
 
     executeAction(actionName: string, params?: any) {
         try {
@@ -88,11 +113,14 @@ class Control {
 
     get
     value() {
-        const { dataBinding: { converter } } = this.field;
+        const { dataBinding: { converter },  validator} = this.field;
         const value = get(this._viewModel, this.field.dataBinding.path);
-        this._errorList = [];
+        this._errorList =  (validator || []).map((item: any) => {
 
-        return  this.converterValue(converter, value, 'get');
+            return this.validatorExtension(item.name, value);
+        }).filter((e: any) => e);
+        console.log('this._errorList: ', this._errorList);
+        return  this.converterExtension(converter, value, 'get');
     }
 
     get
@@ -106,8 +134,8 @@ class Control {
     }
 
     get
-    error() {
-        return []
+    errorList() {
+        return this._errorList
     }
 
 

@@ -11,6 +11,7 @@ import validator from "./provider/validator";
 import components from "./provider/UI-element";
 import extension from "./provider/extension";
 import RenderProvider from "./provider/renderProvider";
+import converter from "./provider/converter";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -20,7 +21,8 @@ const root = ReactDOM.createRoot(
 RegisterFormBuilder.use({
   components,
   extension,
-  validator
+  validator,
+  converter
 }).render(RenderProvider);
 
 root.render(
