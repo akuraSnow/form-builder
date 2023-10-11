@@ -3,7 +3,6 @@ const requireComponent = require.context('./', false, /\.convert\.ts$/);
 
 
 const requireAll = requireComponent.keys().map(requireComponent);
-console.log('requireAll: ', requireAll);
 let components: any = {};
 
 for (const item of requireAll) {

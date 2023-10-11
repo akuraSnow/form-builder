@@ -109,8 +109,6 @@ class Control {
         }
     }
 
-
-
     get
     value() {
         const { dataBinding: { converter },  validator} = this.field;
@@ -119,7 +117,6 @@ class Control {
 
             return this.validatorExtension(item.name, value);
         }).filter((e: any) => e);
-        console.log('this._errorList: ', this._errorList);
         return  this.converterExtension(converter, value, 'get');
     }
 

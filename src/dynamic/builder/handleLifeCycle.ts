@@ -17,11 +17,13 @@ export class HandleLifeCycle {
     const action = BasicAction.getInstance();
 
     this._setStatus("readying", []);
+    if (this.alias.json) {
+      return Promise.resolve(this.alias.json);
+    }
     return action.fetchData(this.alias.jsonName).then((res: any) => {
       return res;
     });
   }
-
 
   _setStatus(status: any, data: any[]) {
     this.data = data;
@@ -32,8 +34,7 @@ export class HandleLifeCycle {
     });
   }
 
-
-  readying(data: any) { }
+  readying() {}
   componentWillMount() {}
   componentDidMount() {}
   componentWillUpdate() {}

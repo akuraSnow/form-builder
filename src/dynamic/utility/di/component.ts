@@ -25,8 +25,6 @@ export function AutoWired(alias?: string) {
         target,
         propertyName
       );
-
-      console.log(99, classConstructor, target, propertyName);
       name = classConstructor.name;
       // eslint-disable-next-line no-unused-expressions
       if (name === "Object") {

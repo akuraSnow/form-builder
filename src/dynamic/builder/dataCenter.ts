@@ -19,7 +19,6 @@ export class DataCenter {
                 if (Object.prototype.toString.call(element) === '[object Object]') {
                     viewModel[key] = this._handle_view_model(viewModel[key], handler, path + `${path ? '.' : ''}` + key );
                 }
-                
             }
         }
 
@@ -27,13 +26,11 @@ export class DataCenter {
         return new Proxy(viewModel, handler);
     }
 
-
-    _get_init_view_model(json: any, viewModel: any = {}) {
+    _get_init_view_model(json: any = [], viewModel: any = {}) {
 
         let newViewModel: any = viewModel;
 
         json.forEach((item: any) => {
-
             if (item.dataBinding) {
                 const path = item.dataBinding.path.split('.');
                 path.reduce((pre: any, nex: string, index: number) => {

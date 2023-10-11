@@ -14,9 +14,5 @@ export default class labelAction extends Extend{
         } catch (error) {
             console.error(`未注册对应的函数${content.field.labelAction}, ${error}`);
         }
-
-
     }
-    
-    
 }

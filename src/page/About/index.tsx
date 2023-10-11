@@ -26,7 +26,6 @@ export default class About{
       premium: 123432
     }
 
-    console.log(this)
     setTimeout(() => {
       // this.viewModel.application = {
       //   name: '111111111111111'

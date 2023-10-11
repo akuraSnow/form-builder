@@ -13,17 +13,6 @@ export class RegisterFormBuilder {
 
   }
 
-  // static use(Components: any) {
-  //   for (const key in Components) {
-  //     if (Object.prototype.hasOwnProperty.call(Components, key)) {
-  //       const element = Components[key];
-  //       iocContainer.registerComponent(element, key);
-  //     }
-  //   }
-
-  //   return this;
-  // }
-
   static use(extendObject: any) {
 
     for (const key in extendObject) {
@@ -43,10 +32,7 @@ export class RegisterFormBuilder {
   }
 
   static render(fun: Function) {
-    console.log('fun: ', fun);
-    console.log('iocContainer: ', iocContainer);
     iocContainer.cacheFunction(fun);
-
   }
 
 }

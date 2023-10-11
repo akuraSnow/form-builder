@@ -13,7 +13,6 @@ export default function Input(props: any) {
       dataBinding: { path },
     },
   } = props;
-  console.log("control: ", path, value);
 
   const validateStatus = errorList.length === 0 ? "success" : "error";
   const validateMes = errorList[0] && errorList[0].mes;

@@ -57,9 +57,9 @@ export default class util {
         }
       
         for (let mixin of mixins) {
-          copyProperties(target, mixin); // 拷贝静态属性
-          copyProperties(target.prototype, mixin.prototype); // 拷贝原型属性
-          copyProperties(target.prototype, mixin.prototype.__proto__); // 拷贝继承的原型属性
+          copyProperties(target.target, mixin); // 拷贝静态属性
+          copyProperties(target.prototype.target, mixin.prototype); // 拷贝原型属性
+          copyProperties(target.prototype.target, mixin.prototype.__proto__); // 拷贝继承的原型属性
         }
       
         return target;

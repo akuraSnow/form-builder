@@ -4,7 +4,6 @@ import _ from 'lodash';
 class Layout{ 
 
     loadSource(json: any, viewModel: any) {
-        console.log('iocContainer: ', iocContainer);
         let newJson = [];
         if (json && Object.keys(json).length !== 0) {
             newJson = json.map((item: any) => {
