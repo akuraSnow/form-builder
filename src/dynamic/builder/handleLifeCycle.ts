@@ -11,8 +11,8 @@ export class HandleLifeCycle {
 
   constructor() { }
 
-  _ready_handle_load_json(alias: any, observer: any) {
-    this.observer = observer;
+  _ready_handle_load_json(alias: any, observer?: any) {
+    this.observer = observer || this.observer;
     this.alias = alias;
     const action = BasicAction.getInstance();
 

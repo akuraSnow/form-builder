@@ -5,20 +5,20 @@ import { BasicExtension } from "../extension/bindExtension";
 import util from "../utility/until";
 import _ from "lodash";
 
-export function createClassForStatus(target: any, alias: any, observer: any) {
+export function createClassForStatus({target, alias, props}: any, observer: any) {
   target.target = {};
   target.prototype.target = {};
   class test extends util.Mixin(target, HandleLifeCycle, DataCenter) {
     [x: string]: any;
 
     constructor(...args: any[]) {
-      super(args);
-      this.handleLifeCycleForJson(args);
+      super(args, props);
+      this.loadJson(args[0], args[1]);
     }
 
-    async handleLifeCycleForJson(args: any) {
+    async loadJson(alias: any, observer: any) {
       // 从加载json文件
-      const jsonList = await this.target._ready_handle_load_json(...args);
+      const jsonList = await this.target._ready_handle_load_json(alias, observer);
       this.setJson(jsonList);
     }
 

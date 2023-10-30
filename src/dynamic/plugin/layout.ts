@@ -23,12 +23,6 @@ class Layout{
         return this.normalizeFormConfig(newJson);
     
     }
-
-
-    update() {
-        console.log(222);
-        // this._value = 222;
-    }
     
     normalizeFormConfig(fields: any) {
     

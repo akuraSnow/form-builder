@@ -18,7 +18,6 @@ export default function UnitComponent(props: any) {
     return () => Component.unsubscript(observable);
   }, []);
 
-  console.log('field: ', field);
   return field.visibility !== 'hidden' ? <Element field={field} control={control} /> : <div></div>;
 
 }

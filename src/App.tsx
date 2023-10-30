@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={React.createElement(Home as any)} />
-          <Route path="about" element={React.createElement(About as any)}/>
+          <Route path="about" element={React.createElement(About as any, { name: '222'})}/>
         </Route>
       </Routes>
     </div>

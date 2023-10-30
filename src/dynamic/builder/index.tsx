@@ -44,9 +44,11 @@ export const registerFormBuilder = new RegisterFormBuilder();
 export default function PageFormBuilder(alias: any): any {
 
   return (target: any): any => {
-    return () => {
+
+    return (props: any) => {
+
       const source = new Observable((observer: any) => {
-        createClassForStatus(target, alias, observer);
+        createClassForStatus({target, alias, props}, observer);
       });
 
       return iocContainer.functions(source, Component);

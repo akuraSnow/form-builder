@@ -11,60 +11,60 @@ export default class Home {
 
   constructor() {
     this.viewModel = { premium: 111 };
-    // this.setJson({
-    //   fields: [
-    //     {
-    //       id: 'input',
-    //       type: 'input',
-    //       label: '666',
-    //       labelAction: 'getInputAction',
-    //       dataBinding: {
-    //         path: 'premium',
-    //         converter: 'convertLblPaymentAmount',
-    //       },
-    //       layoutDefinition: {
-    //         row: 1,
-    //         column: 0,
-    //         columnSpan: 6,
-    //       },
-    //     },
-    //     {
-    //       id: 'input',
-    //       type: 'input',
-    //       label: '666',
-    //       dataBinding: {
-    //         path: 'premium',
-    //         converter: 'convertLblPaymentAmount',
-    //       },
-    //       validator: [
-    //         {
-    //           name: 'required',
-    //         },
-    //       ],
-    //       layoutDefinition: {
-    //         row: 1,
-    //         column: 1,
-    //         columnSpan: 6,
-    //       },
-    //     },
-    //   ],
-    // });
+    this.setJson({
+      fields: [
+        {
+          id: 'input',
+          type: 'input',
+          label: '666',
+          labelAction: 'getInputAction',
+          dataBinding: {
+            path: 'premium',
+            converter: 'convertLblPaymentAmount',
+          },
+          layoutDefinition: {
+            row: 1,
+            column: 0,
+            columnSpan: 6,
+          },
+        },
+        {
+          id: 'input',
+          type: 'input',
+          label: '666',
+          dataBinding: {
+            path: 'premium',
+            converter: 'convertLblPaymentAmount',
+          },
+          validator: [
+            {
+              name: 'required',
+            },
+          ],
+          layoutDefinition: {
+            row: 1,
+            column: 1,
+            columnSpan: 6,
+          },
+        },
+      ],
+    });
 
-    // setTimeout(() => {
+    setTimeout(() => {
 
-    //   this.setJson({
-    //     fields: [
-    //       {
-    //         id: 'input',
-    //         type: 'input',
-    //         label: '666',
-    //         dataBinding: {
-    //           path: 'premium',
-    //           converter: 'convertLblPaymentAmount',
-    //         }
-    //       }
-    //     ]})
-    // }, 1000);
+      this.setJson({
+        fields: [
+          {
+            id: 'input',
+            type: 'input',
+            label: '666',
+            dataBinding: {
+              path: 'premium',
+              converter: 'convertLblPaymentAmount',
+            }
+          }
+        ]})
+    }, 1000);
   }
 
   getInputAction() {
