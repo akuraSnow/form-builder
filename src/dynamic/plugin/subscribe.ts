@@ -18,9 +18,9 @@ class EmitObserver extends Observer {
         }
     }
 
-    updateById(self: any, id: string) {
+    updateById(self: any, id: string, field: any) {
         if (id === this.field.id) {
-            this.renderFunctionList({field:  this.field, viewModel: self.state.viewModel}); 
+            this.renderFunctionList({field: {...this.field, ... field}, viewModel: self.state.viewModel}); 
         }
     }
 
@@ -44,6 +44,11 @@ export class ComponentObserver {
     subscript(item: any, fn: any) {
         const emit = new EmitObserver(item, fn);
         Publisher.add(emit);
+        return emit;
+    }
+
+    unsubscript(item: any) {
+        Publisher.remove(item);
     }
 
     changeState(newState: any) {
@@ -67,12 +72,9 @@ export class ComponentObserver {
 class ViewModelPublisher extends Subject {
 
     private state: any = {};
-    private value: any = undefined;
-
 	constructor() {
 		super()
 		this.observers = [];
-        // this.setState =  _.throttle(this.setState, 500);
 	}
 
 	getState() {
@@ -108,10 +110,11 @@ class ViewModelPublisher extends Subject {
         });
     }
 
-    notifyById(viewModel: any, value: any, id?: any) {
-        this.state = { viewModel, value };
+    notifyById(id: any, field: any) {
         this.observers.forEach((observer) => {
-            observer.updateById(this, id);
+            if (observer.field.id === id) {
+                observer.updateById(this, id, field);
+            }
         });
     }
 

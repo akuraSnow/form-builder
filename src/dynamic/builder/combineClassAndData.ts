@@ -33,6 +33,10 @@ export function createClassForStatus(target: any, alias: any, observer: any) {
       this.target._setStatus("componentDidMount", newContent);
     }
 
+    updateField(field: any) {
+      Publisher.notifyById(field.id, field);
+    }
+
     getHandler(): any {
       return {
         get(target: any, prop: any) {

@@ -64,6 +64,7 @@ export class Observable {
         subscriber.add(this._subscribe(subscriber));
         return subscriber;
     }
+
     pipe(...operations) {
         return pipeFromArray(operations)(this);
     }

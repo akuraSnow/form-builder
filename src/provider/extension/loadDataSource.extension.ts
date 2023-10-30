@@ -7,7 +7,7 @@ export default class loadDataSource extends Extend{
 
         try {
             if (content.field.dataSource) {
-                const list =  await this.target.__proto__[content.field.dataSource].call(this);
+                const list =  await this.executeAction(content.field.dataSource, this);
                 content.field.dataSourceList = list;
             }
             return Promise.resolve(content);

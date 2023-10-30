@@ -10,10 +10,7 @@ class Layout{
                 try {
                     return {
                         Element: iocContainer.components.get(item.type),    
-
                         field: item,
-                        instance: null,
-                        Event: null,
                         data: {}
                     };
         
@@ -37,14 +34,14 @@ class Layout{
     
         const contentList: any = [];
         const result = _.groupBy(fields, (item: any, index: number) => {
-            return item.field.layoutDefinition.row;
+            return item.field.layoutDefinition && item.field.layoutDefinition.row;
         });
     
         for (const key in result) {
             if (Object.prototype.hasOwnProperty.call(result, key)) {
                 const element = result[key];
                 contentList.push(_.sortBy(element, (item: any) => {
-                    return item.field.layoutDefinition.column;
+                    return item.field.layoutDefinition && item.field.layoutDefinition.column;
                 }))
             }
         }

@@ -4,19 +4,22 @@ import "./index.css";
 export default function UnitComponent(props: any) {
 
   const { ElementList, Component } = props;
-  const { Element, field, control } =  ElementList;
+  const { Element, field: newField, control } =  ElementList;
+  const [field, setField] = useState(newField);
   const [, updateState]: any = useState();
   const handleForceupdateMethod = useCallback(() => updateState({}), []);
   
   useEffect(() => {
-    const observable = Component.subscript(field, (res: any) => {
-      // console.log('res: ', res);
+    const observable = Component.subscript(field, ({field}: any) => {
+      setField(field);
       handleForceupdateMethod();
     });
 
-    // return Component.remove(observable);
+    return () => Component.unsubscript(observable);
   }, []);
 
-  return field.visibility !== 'hidden' ? <Element field={field} control={control} /> : null;
+  console.log('field: ', field);
+  return field.visibility !== 'hidden' ? <Element field={field} control={control} /> : <div></div>;
+
 }
 

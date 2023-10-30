@@ -34,16 +34,22 @@
                 "columnSpan": 6
             }
         },
-
-
         {
-            "id": "html",
-            "type": "html",
+            "id": "html1",
+            "type": "button",
             "label": "222222",
             "layoutDefinition": {
                 "row": 5,
                 "column": 0
-            }
+            },
+            "action": {
+                "onclick": {
+                  "name": "showModel",
+                  "params": {
+                    "type": "label"
+                  }
+                }
+              }
         },
         {
             "id": "html",

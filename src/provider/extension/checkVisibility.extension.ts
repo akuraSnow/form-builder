@@ -6,7 +6,7 @@ export default class checkVisibility extends Extend{
         
         try {
             if (content.field.checkVisibility) {
-                const list =  await this.target.__proto__[content.field.checkVisibility].call(this);
+                const list =  await this.executeAction(content.field.checkVisibility, this);
                 content.field.visibility = list;
             }
     

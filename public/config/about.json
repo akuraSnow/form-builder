@@ -23,7 +23,7 @@
             "label": "我是一个输入框",
             "dataBinding": {
                 "path": "application.premium",
-                "converter": "convertLblPaymentAmount",
+                "converter": "function main(){ return {set: (value) => {return  value+ '?'},get: (value) => { return value}}}",
                 "mode": "modelToView"
             },
             "layoutDefinition": {
@@ -67,6 +67,14 @@
                 "row": 1,
                 "column": 0,
                 "columnSpan": 4
+            },
+            "action": {
+                "onchange": {
+                    "name": "function main(res, view) { view.viewModel.application.premium = 'fsdfs'; console.log(res, view);};",
+                    "params": {
+                        "value": "value"
+                    }
+                }
             }
         },
         {
@@ -91,7 +99,7 @@
         {
             "id": "select",
             "type": "select",
-            "dataSource": "loadCountry",
+            "dataSource":"function  main(){\n  return [{\n  \n label: 'name',\n    value: '111'\n  }];\n}\n",
             "dataBinding": {
                 "path": "application.country.code",
                 "converter": "convertLblPaymentAmount"
@@ -135,6 +143,11 @@
                 }
             }
         }
-    ]
+    ],
+    "actions": {
+        "load": {
+            "name": "getData"
+        }
+    }
 
 }

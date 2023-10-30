@@ -6,7 +6,7 @@ export default class labelAction extends Extend{
 
         try {
             if (content.field.labelAction) {
-                const label =  await this.target.__proto__[content.field.labelAction].call(this);
+                const label =  await this.executeAction(content.field.labelAction, this);
                 content.field.label = label;
             }
     
