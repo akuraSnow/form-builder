@@ -15,9 +15,13 @@ export default class About{
     console.log('res: ', res);
     console.log('res: ', this);
 
-    this.loadJson({
-      jsonName: 'config/about.json'
+    setTimeout(() => {
+      this.loadJson({
+        jsonName: 'config/about.json'
+      })
     })
+
+
 
     // this.viewModel = {
     //   application: {
@@ -39,6 +43,21 @@ export default class About{
     //   this.viewModel.application.name = '111111111111';
     // }, 2000)
 
+  }
+
+  async getData() {
+
+
+    return new Promise((res: any) => {
+      setTimeout(() => {
+        res({
+          application: {
+            premium: '32333333',
+            country: {code: '2222'}
+          }
+        });
+      }, 2000) 
+    }) 
   }
 
   loadCountry() {

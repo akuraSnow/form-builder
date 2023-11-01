@@ -1,22 +1,22 @@
 
 import BasicAction from "../plugin/basicAction";
-import { Observable } from "../utility";
+import { Extend } from '../extension/index';
 
 
 export class HandleLifeCycle {
-  private observer: any = new Observable(() => {});
+  [x: string]: any;
+
   private alias: any;
   private data: any;
   private status: any;
 
   constructor() { }
 
-  _ready_handle_load_json(alias: any, observer?: any) {
-    this.observer = observer || this.observer;
+  _ready_handle_load_json(alias: any) {
+
     this.alias = alias;
     const action = BasicAction.getInstance();
 
-    this._setStatus("readying", []);
     if (this.alias.json) {
       return Promise.resolve(this.alias.json);
     }
@@ -25,10 +25,25 @@ export class HandleLifeCycle {
     });
   }
 
-  _setStatus(status: any, data: any[]) {
+  _ready_handle_actions(jsonList: any, self: any) {
+
+    const { actions: { load: { name ='', params=undefined } } = {load: {}}, fields } = jsonList;
+    if (!name) {
+      return {}
+    }
+    const extend = new Extend(fields, self.viewModel, self);
+
+    return extend.executeAction(name, params)
+
+  }
+
+  _setStatus(status: any, data: any[], observer: any) {
+    if (!observer || !data) {
+      return false;
+    }
     this.data = data;
     this.status = status;
-    this.observer.next({
+    observer && observer.next({
       status: this.status,
       data: this.data,
     });

@@ -12,29 +12,49 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
     [x: string]: any;
 
     constructor(...args: any[]) {
-      super(args, props);
-      this.loadJson(args[0], args[1]);
+      super(props, args);
+      this.args = args;
+      this.executionStatus("readying");
+      this.loadJson(args[0]);
     }
 
-    async loadJson(alias: any, observer: any) {
+    async loadJson(alias: any) {
+      this.executionStatus("componentWillMount");
+      if (!alias.jsonName) {
+        this.executionStatus("componentDidMount");
+        return false;
+      }
       // 从加载json文件
-      const jsonList = await this.target._ready_handle_load_json(alias, observer);
-      this.setJson(jsonList);
+
+      const jsonList = await this.target._ready_handle_load_json(alias);
+      // 在渲染页面之前
+      this.viewModel = await this.target._ready_handle_actions(jsonList, this);
+      await this.setJson(jsonList);
+      
+      this.executionStatus("componentDidMount");
     }
 
     async setJson(json: any) {
+      this.executionStatus("componentWillUpdate");
       // 获取初始化viewModel
       const { content, viewModel} = this.target._init_view_model(json, this.viewModel);
       // 把初始化vieModel进行proxy代理
       this.viewModel = this.target._handle_view_model(viewModel, this.getHandler());
       // 把content文件进行扩展之后传出
-      const newContent = await BasicExtension._bind_extension_foreach(content, this.viewModel, this);
+      this.content = await BasicExtension._bind_extension_foreach(content, this.viewModel, this);
 
-      this.target._setStatus("componentDidMount", newContent);
+      this.executionStatus("componentDidUpdate");
     }
 
-    updateField(field: any) {
-      Publisher.notifyById(field.id, field);
+    updateField(fields: any[]) {
+      (fields || []).forEach((field) => {
+        Publisher.notifyById(field.id, field);
+      })
+    }
+
+    executionStatus(status: string) {
+      this[status] && this[status]();
+      this.target._setStatus(status, this.content, this.args[1]);
     }
 
     getHandler(): any {
@@ -63,6 +83,7 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
         }
       };
     } 
+
   }
 
   return new test(alias, observer);

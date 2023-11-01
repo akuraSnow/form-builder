@@ -11,66 +11,83 @@ export default class Home {
 
   constructor() {
     this.viewModel = { premium: 111 };
-    this.setJson({
-      fields: [
-        {
-          id: 'input',
-          type: 'input',
-          label: '666',
-          labelAction: 'getInputAction',
-          dataBinding: {
-            path: 'premium',
-            converter: 'convertLblPaymentAmount',
-          },
-          layoutDefinition: {
-            row: 1,
-            column: 0,
-            columnSpan: 6,
-          },
-        },
-        {
-          id: 'input',
-          type: 'input',
-          label: '666',
-          dataBinding: {
-            path: 'premium',
-            converter: 'convertLblPaymentAmount',
-          },
-          validator: [
-            {
-              name: 'required',
-            },
-          ],
-          layoutDefinition: {
-            row: 1,
-            column: 1,
-            columnSpan: 6,
-          },
-        },
-      ],
-    });
+    // this.setJson({
+    //   fields: [
 
-    setTimeout(() => {
+    //     {
+    //       id: 'input',
+    //       type: 'input',
+    //       label: '666',
+    //       dataBinding: {
+    //         path: 'premium',
+    //         converter: 'convertLblPaymentAmount',
+    //       },
+    //       validator: [
+    //         {
+    //           name: 'required',
+    //         },
+    //       ],
+    //       layoutDefinition: {
+    //         row: 1,
+    //         column: 1,
+    //         columnSpan: 6,
+    //       },
+    //     },
+    //   ],
+    // });
 
-      this.setJson({
-        fields: [
-          {
-            id: 'input',
-            type: 'input',
-            label: '666',
-            dataBinding: {
-              path: 'premium',
-              converter: 'convertLblPaymentAmount',
-            }
-          }
-        ]})
-    }, 1000);
+    // setTimeout(() => {
+
+    //   this.setJson({
+    //     fields: [
+    //       {
+    //         id: 'input',
+    //         type: 'input',
+    //         label: '666',
+    //         dataBinding: {
+    //           path: 'premium',
+    //           converter: 'convertLblPaymentAmount',
+    //         }
+    //       }
+    //     ]})
+    // }, 1000);
   }
 
-  getInputAction() {
 
+  componentDidMount(data: any) {
+    // console.warn('data: ', this);
+    // this.setJson({
+    //   fields: [
+
+    //     {
+    //       id: 'input',
+    //       type: 'input',
+    //       label: '666',
+    //       dataBinding: {
+    //         path: 'premium',
+    //         converter: 'convertLblPaymentAmount',
+    //       },
+    //       validator: [
+    //         {
+    //           name: 'required',
+    //         },
+    //       ],
+    //       layoutDefinition: {
+    //         row: 1,
+    //         column: 1,
+    //         columnSpan: 6,
+    //       },
+    //     },
+    //   ],
+    // });
+  }
+
+
+
+
+  getInputAction() {
     console.log(this.viewModel);
-    return '我是一个大写的人';
+    return Promise.resolve('我是一个rrr大写的人');
   }
 
   getViewModel() {
@@ -80,11 +97,15 @@ export default class Home {
   showModel() {
     console.log(this);
 
-    this.target.updateField({
-      id: 'html',
-      label: "fdfdffff"
-    });
-
-
+    this.target.updateField([
+      {
+        id: 'html',
+        label: 'fdfdffff',
+      },
+      {
+        id: 'input33',
+        label: 'eeee',
+      },
+    ]);
   }
 }

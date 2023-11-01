@@ -16,7 +16,7 @@
             }
         },
         {
-            "id": "input",
+            "id": "input33",
             "type": "input",
             "label": "666",
             "dataBinding": {
@@ -60,6 +60,11 @@
                 "column": 8
             }
         }
-    ]
+    ],
+    "actions": {
+        "load": {
+            "name": "loadData"
+        }
+    }
 
 }

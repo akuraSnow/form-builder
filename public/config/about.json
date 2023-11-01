@@ -41,9 +41,7 @@
                         "value": "value"
                     }
                 }
-            },
-            "visibility": "hidden",
-            "checkVisibility": "checkHtml"
+            }
         },
         {
             "id": "html",
