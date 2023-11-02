@@ -26,14 +26,14 @@ export class Extend {
     executeAction(actionName: string, params?: any) {
         try {
           if (this.target.__proto__[actionName]) {
-            return this.target.__proto__[actionName].call(this, params);
+            return this.target.__proto__[actionName].call(this.target, params);
           }
     
           const action = new Function('target', 'params', actionName + ';return main(params, target);');
-          return action(this.target, params);
+          return action.call(this.target, params);
         
         } catch (error) {
-          console.error(`未注册对应的函数${actionName}, ${error}`);
+          console.error(`未执行函数${actionName}: ${error}`);
         }
     }
 

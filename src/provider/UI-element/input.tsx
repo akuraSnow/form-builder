@@ -8,10 +8,8 @@ export default function Input(props: any) {
         errorList
     },
     field: {
-      id,
-      label,
-      dataBinding: { path },
-    },
+      label
+    }
   } = props;
 
   const validateStatus = errorList.length === 0 ? "success" : "error";

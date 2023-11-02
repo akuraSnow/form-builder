@@ -15,11 +15,11 @@ export default class About{
     console.log('res: ', res);
     console.log('res: ', this);
 
-    setTimeout(() => {
+
       this.loadJson({
         jsonName: 'config/about.json'
       })
-    })
+    
 
 
 
@@ -49,14 +49,12 @@ export default class About{
 
 
     return new Promise((res: any) => {
-      setTimeout(() => {
-        res({
+      res({
           application: {
             premium: '32333333',
             country: {code: '2222'}
           }
         });
-      }, 2000) 
     }) 
   }
 

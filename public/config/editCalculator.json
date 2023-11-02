@@ -1,0 +1,24 @@
+{
+  "fields": [
+    {
+      "id": "input",
+      "type": "input",
+      "label": "验证名",
+      "dataBinding": {
+        "path": "name"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "labelCol": 4,
+        "wrapperCol": 16,
+        "columnSpan": 12
+      }
+    }
+  ],
+  "actions": {
+    "load": {
+      "name": "getCalData"
+    }
+  }
+}

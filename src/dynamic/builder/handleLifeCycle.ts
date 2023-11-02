@@ -26,19 +26,34 @@ export class HandleLifeCycle {
   }
 
   _ready_handle_actions(jsonList: any, self: any) {
-
     const { actions: { load: { name ='', params=undefined } } = {load: {}}, fields } = jsonList;
     if (!name) {
       return {}
     }
     const extend = new Extend(fields, self.viewModel, self);
+    return extend.executeAction(name, params) || self.viewModel;
+  }
 
-    return extend.executeAction(name, params)
 
+  executionStatus(status: string, content: any[] = []) {
+
+    if (
+      !this.args || 
+      ['readying', 'componentWillMount', 'componentDidMount'].includes(status) &&  this.status.includes(status)
+    ) {
+      return false;
+    }
+
+    const [, observer] = this.args;
+
+
+    this.status.push(status);
+    this[status] && this[status].call(this, content);
+    this.target._setStatus(status, content, observer);
   }
 
   _setStatus(status: any, data: any[], observer: any) {
-    if (!observer || !data) {
+    if (!observer || !data || !Array.isArray(data)){
       return false;
     }
     this.data = data;
