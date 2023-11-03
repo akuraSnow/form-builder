@@ -1,4 +1,4 @@
-
+import { isArray, isObject, forOwn, omit } from 'lodash';
 
 export default class util {
 
@@ -22,6 +22,30 @@ export default class util {
             }
             return this.quickSort(left, cb).concat(arr[0], this.quickSort(right, cb));
         }
+    }
+
+    static omitDeepLodash(input: any, props: string[]): any {
+
+      let p = props;
+      function omitDeepOnOwnProps(obj: any) {
+          if (!isArray(obj) && !isObject(obj)) {return obj; }
+          if (isArray(obj)) {return util.omitDeepLodash(obj, p); }
+  
+          const o: any = {};
+          forOwn(obj, (value: any, key: any) => {
+              o[key] = util.omitDeepLodash(value, p);
+          });
+
+          return omit(o, p);
+      }
+  
+      if (arguments.length > 2) {p = Array.prototype.slice.call(arguments).slice(1); }
+  
+      if (typeof input === 'undefined') {return {}; }
+  
+      if (isArray(input)) { return input.map(omitDeepOnOwnProps);}
+  
+      return omitDeepOnOwnProps(input);
     }
 
     static Mixin<T extends any[]>(target: any, ...mixins: T) {

@@ -80,11 +80,7 @@ export default class Home {
         },
       ],
     });
-
-
   }
-
-  
 
   componentDidMount(data: any) {
     console.log('data: ', data);
@@ -93,9 +89,7 @@ export default class Home {
     // this.loadJson({
     //   jsonName: 'config/editCalculator.json'
     // })
-
   }
-
 
   getCalculatorData(res: any) {
     console.log('res: ', res);
@@ -121,29 +115,32 @@ export default class Home {
   }
 
   showModel(params: any) {
-
     console.log(this.viewModel);
 
     this.viewModel.modal = {
-      name: '2222'
+      name: '2222',
     };
     this.updateField([
-      { id: 'model111', metaData: { title: '新增', open: true, functions: {
-        getCalData: this.getCalData()
-      } } }
-    ])
+      {
+        id: 'model111',
+        metaData: {
+          title: '新增',
+          open: true
+        },
+      },
+    ]);
   }
 
   handleCancel(params: any) {
     console.log('params: ', params);
 
     console.log(this);
-    this.updateField([
-      { id: 'model111', metaData: { open: false } }
-    ])
+    this.updateField([{ id: 'model111', metaData: { open: false } }]);
   }
 
   getCalData() {
-    return {}
+    return {
+      name: '343444',
+    };
   }
 }

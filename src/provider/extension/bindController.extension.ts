@@ -43,27 +43,28 @@ class Control {
     const value = val.target ? val.target.value : val;
     const { action, dataBinding } = this.field;
 
-    if (dataBinding && dataBinding.path) {
-      const { path, converter } = dataBinding;
-
-      const newValue = this.converterExtension(converter, value, 'set');
-      set(this._viewModel, path, newValue);
-    }
-
-    for (const key in action) {
-      if (Object.prototype.hasOwnProperty.call(action, key)) {
-        const { name, params } = action[key];
-        if (eventType === key) {
-          this.target.executeAction(name, params);
+    if (action && action[eventType]) {
+      if (dataBinding && dataBinding.path) {
+        const { path, converter } = dataBinding;
+  
+        const newValue = this.converterExtension(converter, value, 'set');
+        set(this._viewModel, path, newValue);
+      }
+  
+      for (const key in action) {
+        if (Object.prototype.hasOwnProperty.call(action, key)) {
+          const { name, params } = action[key];
+          if (eventType === key) {
+            this.target.executeAction(name, params);
+          }
         }
       }
     }
   }
 
   converterExtension(convertName: string, value: any, operator: string) {
-    if (!convertName) {
-      return value;
-    }
+    
+    if (!convertName) {return value; }
 
     const result = this.findExecuteFunction(
       {
@@ -76,18 +77,11 @@ class Control {
     return result === value ? value : result[operator](value);
   }
 
-  validatorExtension(validatorName: string, value: any) {
-    if (!validatorName) {
+  validatorExtension(name: string, value: any) {
+    if (!name) {
       return null;
     }
-    return this.findExecuteFunction(
-      {
-        name: validatorName,
-        value,
-        extensionName: 'validator',
-      },
-      null,
-    );
+    return this.findExecuteFunction({ name, value, extensionName: 'validator', }, null);
   }
 
   findExecuteFunction({ name, value, extensionName }: any, defaultReturn?: any,
@@ -124,7 +118,10 @@ class Control {
   }
 
   get viewModel() {
-    return this._viewModel;
+    return JSON.parse(JSON.stringify(this._viewModel), function(res: any) {
+      console.log('res: ', res);
+
+    });
   }
 
   get event() {

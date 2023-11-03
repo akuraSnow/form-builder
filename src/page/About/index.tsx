@@ -75,7 +75,7 @@ export default class About{
   }
 
   changeSelect() {
-    console.log(this.viewModel);
+    console.log(this._viewModel);
   }
 
   changeShukuang() {

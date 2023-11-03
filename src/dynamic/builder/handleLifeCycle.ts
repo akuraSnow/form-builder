@@ -35,7 +35,7 @@ export class HandleLifeCycle {
   }
 
 
-  executionStatus(status: string, content: any[] = []) {
+  executionStatus(status: string) {
 
     if (
       !this.args || 
@@ -46,10 +46,9 @@ export class HandleLifeCycle {
 
     const [, observer] = this.args;
 
-
     this.status.push(status);
-    this[status] && this[status].call(this, content);
-    this.target._setStatus(status, content, observer);
+    this[status] && this[status].call(this, this.content || []);
+    this.target._setStatus(status, this.content || [], observer);
   }
 
   _setStatus(status: any, data: any[], observer: any) {

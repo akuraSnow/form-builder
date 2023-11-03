@@ -15,7 +15,7 @@ export default function RenderProvider(source: any, Component: any) {
           setChildren(v.data);
         }
       });
-      return () => observable.unsubscribe();;
+      return () => observable.unsubscribe();
     }, []);
 
     const columns = (item: any, index: number): React.ReactNode => {

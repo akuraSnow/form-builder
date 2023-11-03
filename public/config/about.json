@@ -1,23 +1,6 @@
 {
     "fields": [
         {
-            "id": "html",
-            "type": "html",
-            "label": "<div>2222<div>",
-            "layoutDefinition": {
-                "row": 2,
-                "column": 10,
-                "columnSpan": 4
-            },
-            "dataBinding": {
-                "path": "premium",
-                "converter": "convertLblPaymentAmount",
-                "mode": "modelToView"
-            },
-            "visibility": "hidden",
-            "checkVisibility": "checkHtml"
-        },
-        {
             "id": "input",
             "type": "input",
             "label": "我是一个输入框",
@@ -44,16 +27,6 @@
             }
         },
         {
-            "id": "html",
-            "type": "html",
-            "label": "<div>2-7<div>",
-            "layoutDefinition": {
-                "row": 2,
-                "column": 7,
-                "columnSpan": 4
-            }
-        },
-        {
             "id": "input",
             "type": "input",
             "label": "666",
@@ -68,30 +41,11 @@
             },
             "action": {
                 "onchange": {
-                    "name": "function main(res, view) { view.viewModel.application.premium = 'fsdfs'; console.log(res, view);};",
+                    "name": "function main(res, view) { view.application.premium = 'fsdfs';}",
                     "params": {
                         "value": "value"
                     }
                 }
-            }
-        },
-        {
-            "id": "html",
-            "type": "html",
-            "label": "222222",
-            "layoutDefinition": {
-                "row": 5,
-                "column": 0
-            }
-        },
-        {
-            "id": "html",
-            "type": "html",
-            "label": "<div>2-8<div>",
-            "layoutDefinition": {
-                "row": 2,
-                "column": 8,
-                "columnSpan": 4
             }
         },
         {

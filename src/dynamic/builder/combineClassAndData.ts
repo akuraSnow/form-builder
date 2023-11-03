@@ -15,14 +15,22 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
       super(props, args);
       this.args = args;
       this.status= [];
-      this.target.executionStatus.call(this, "readying", []);
+      this.target.executionStatus.call(this, "readying");
       this.loadJson(args[0]);
     }
 
+    get _viewModel() {
+
+      const viewModel = _.cloneDeep(this.viewModel);
+
+      return util.omitDeepLodash(viewModel, ['__path__']);
+
+    }
+
     async loadJson(alias: any) {
-      this.target.executionStatus.call(this, "componentWillMount", []);
+      this.target.executionStatus.call(this, "componentWillMount");
       if (!alias.jsonName) {
-        this.target.executionStatus.call(this, "componentDidMount", []);
+        this.target.executionStatus.call(this, "componentDidMount");
         return false;
       }
       // 从加载json文件
@@ -32,11 +40,11 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
       this.viewModel = await this.target._ready_handle_actions(jsonList, this);
       await this.setJson(jsonList);
       
-      this.target.executionStatus.call(this, "componentDidMount", this.content);
+      this.target.executionStatus.call(this, "componentDidMount");
     }
 
     async setJson(json: any) {
-      this.target.executionStatus.call(this, "componentWillUpdate", this.content);
+      this.target.executionStatus.call(this, "componentWillUpdate");
       // 获取初始化viewModel
       const { content, viewModel} = this.target._init_view_model(json, this.viewModel);
       // 把初始化vieModel进行proxy代理
@@ -44,7 +52,7 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
       // 把content文件进行扩展之后传出
       this.content = await BasicExtension._bind_extension_foreach(content, this.viewModel, this);
 
-      this.target.executionStatus.call(this, "componentDidUpdate", this.content);
+      this.target.executionStatus.call(this, "componentDidUpdate");
     }
 
     updateField(fields: any[]) {
