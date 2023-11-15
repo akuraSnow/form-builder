@@ -11,12 +11,8 @@ export class Extend {
 
   async invoke(content: any) {
     const newContent = await Promise.all(
-      content.map(async (contentField: any) => {
-        return await Promise.all(
-          contentField.map(async (field: any) => {
-            return await this.execute(field);
-          }),
-        );
+      content.map(async (field: any) => {
+        return await this.execute(field);
       }),
     );
 

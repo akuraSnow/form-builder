@@ -3,6 +3,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import UnitComponent from './component';
 import './index.css'
+import { LayoutElement } from "../../dynamic/plugin/layout";
 
 export default function RenderProvider(source: any, Component: any) {
 
@@ -12,24 +13,33 @@ export default function RenderProvider(source: any, Component: any) {
     useEffect(() => {
       const observable = source.subscribe({
         next: (v: any) => {
-          setChildren(v.data);
+          // console.log('v: ', v);
+
+          const data = LayoutElement.normalizeTreeFormConfig(v.data);
+          // console.log('data: ', data);
+          setChildren(data);
         }
       });
       return () => observable.unsubscribe();
     }, []);
 
-    const columns = (item: any, index: number): React.ReactNode => {
-      return item.map((ElementList: any, i: number) => {
-        const { layoutDefinition: { columnSpan = 1 } = {}} = ElementList.field;
+    const columns = (item: any, index: number, isRow: boolean): React.ReactNode => {
 
-        return <div className={`grid-item-${columnSpan} align-items-center`} key={`${index}-${i}`.toString()}>
-         <UnitComponent Component={Component} ElementList={ElementList}/>
-        </div>;
-     })
+      if (Array.isArray(item)) {
+        return item.map((el, i: number) => {
+          const flexDirection = isRow ? 'row' : 'column';
+          return <div className="packaging-box" style={{flexDirection: flexDirection}} key={i}>{columns(el, index, !isRow)}</div>;
+        })
+      }
+
+      return item && <div className="component-box" key={`${index}`.toString()}>
+        <UnitComponent Component={Component} ElementList={item}/>
+      </div>;
+
     }
   
     return (children || []).map((item: any, index: number) => {
-        return <div className="grid-container" key={index}>{columns(item, index)}</div>
+        return <div className="flex-container" key={index}>{columns(item, index, true)}</div>
     })
     
   }

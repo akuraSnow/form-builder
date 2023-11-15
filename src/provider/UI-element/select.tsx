@@ -5,13 +5,13 @@ const { Option } = FromSelect;
 
 export default function Select(props: any) {
 
-    const { control, field: { dataSourceList } } = props;
+    const { control, field: { dataSource } } = props;
 
 
     return  (<FromSelect
         defaultValue={control.value}
         style={{ width: '100% '}}
         {...control.event}
-        options={dataSourceList}
+        options={dataSource}
     />)
 }

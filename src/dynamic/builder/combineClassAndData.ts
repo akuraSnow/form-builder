@@ -14,17 +14,9 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
     constructor(...args: any[]) {
       super(props, args);
       this.args = args;
-      this.status= [];
+      this.status = [];
       this.target.executionStatus.call(this, "readying");
       this.loadJson(args[0]);
-    }
-
-    get _viewModel() {
-
-      const viewModel = _.cloneDeep(this.viewModel);
-
-      return util.omitDeepLodash(viewModel, ['__path__']);
-
     }
 
     async loadJson(alias: any) {
@@ -33,8 +25,8 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
         this.target.executionStatus.call(this, "componentDidMount");
         return false;
       }
-      // 从加载json文件
 
+      // 从加载json文件
       const jsonList = await this.target._ready_handle_load_json(alias);
       // 在渲染页面之前
       this.viewModel = await this.target._ready_handle_actions(jsonList, this);
@@ -45,12 +37,15 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
 
     async setJson(json: any) {
       this.target.executionStatus.call(this, "componentWillUpdate");
+      
       // 获取初始化viewModel
       const { content, viewModel} = this.target._init_view_model(json, this.viewModel);
       // 把初始化vieModel进行proxy代理
       this.viewModel = this.target._handle_view_model(viewModel, this.getHandler());
       // 把content文件进行扩展之后传出
       this.content = await BasicExtension._bind_extension_foreach(content, this.viewModel, this);
+      // 异步获取数据
+      BasicExtension._add_content_event_listener(content, this);
 
       this.target.executionStatus.call(this, "componentDidUpdate");
     }
@@ -59,6 +54,10 @@ export function createClassForStatus({target, alias, props}: any, observer: any)
       (fields || []).forEach((field) => {
         Publisher.notifyById(field.id, field);
       })
+    }
+
+    getFieldById(id: any[]) {
+      return ((Publisher as any).observers || []).filter(({ field: { id: fieldId } }: any) => fieldId === id).map((e: any) => e.field);
     }
 
 

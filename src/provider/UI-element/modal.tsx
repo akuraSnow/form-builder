@@ -7,6 +7,7 @@ const Modal = (props: any) => {
 
   const {
     control: { target, value },
+
     field: {
       metaData: { onOk, onCancel, footer, jsonName, functions },
     },
@@ -18,7 +19,7 @@ const Modal = (props: any) => {
     target.executeAction(name,  closeViewModel);
   };
 
-
+  // console.log('value: ', value);
   return (
     <>
       <ModalBuilder
@@ -41,12 +42,12 @@ const Modal = (props: any) => {
           })
         }
       >
-        {React.createElement(ModelContent as any, {
+        {/* {React.createElement(ModelContent as any, {
           jsonName,
           target,
           setCloseViewModel,
           viewModel: value,
-        })}
+        })} */}
       </ModalBuilder>
     </>
   );
@@ -54,7 +55,9 @@ const Modal = (props: any) => {
 
 export default Modal;
 
-@PageFormBuilder({})
+@PageFormBuilder({
+  id: 'modal1',
+})
 class ModelContent {
   [x: string]: any;
 

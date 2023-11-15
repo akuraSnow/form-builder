@@ -9,10 +9,6 @@ import { Observable } from '../utility/rx';
 
 export class RegisterFormBuilder {
 
-  constructor() {
-
-  }
-
   static use(extendObject: any) {
 
     for (const key in extendObject) {
@@ -44,12 +40,22 @@ export const registerFormBuilder = new RegisterFormBuilder();
 export default function PageFormBuilder(alias: any): any {
 
   return (target: any): any => {
+    let element: any;
 
     return (props: any) => {
 
+      const ComponentListId =  `${target.name}-${props.key}`;
+
       const source = new Observable((observer: any) => {
-        createClassForStatus({target, alias, props}, observer);
+        element = createClassForStatus({target, alias, props}, observer);
+        iocContainer.registerExtension(element, ComponentListId, 'ElementList');
+
       });
+
+      if (iocContainer.ElementList ) {
+        const ElementList = iocContainer.ElementList.get(ComponentListId);
+        ElementList && ElementList.onPropsChange && ElementList.onPropsChange(props);
+      }
 
       return iocContainer.functions(source, Component);
     };

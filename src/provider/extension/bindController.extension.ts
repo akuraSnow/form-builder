@@ -34,7 +34,7 @@ class Control {
       onBlur: (val: any) => this.publishEvent('onblur', val),
       onFocus: (val: any) => this.publishEvent('onfocus', val),
       onKeyUp: (val: any) => this.publishEvent('onkeyup', val),
-      onKeyDown: (val: any) =>  this.publishEvent('onkeyDown', val),
+      onKeyDown: (val: any) => this.publishEvent('onkeyDown', val),
       onDrag: (val: any) => this.publishEvent('onDrag', val),
     };
   }
@@ -43,14 +43,14 @@ class Control {
     const value = val.target ? val.target.value : val;
     const { action, dataBinding } = this.field;
 
+    if (dataBinding && dataBinding.path) {
+      const { path, converter } = dataBinding;
+
+      const newValue = this.converterExtension(converter, value, 'set');
+      set(this._viewModel, path, newValue);
+    }
+    
     if (action && action[eventType]) {
-      if (dataBinding && dataBinding.path) {
-        const { path, converter } = dataBinding;
-  
-        const newValue = this.converterExtension(converter, value, 'set');
-        set(this._viewModel, path, newValue);
-      }
-  
       for (const key in action) {
         if (Object.prototype.hasOwnProperty.call(action, key)) {
           const { name, params } = action[key];
@@ -63,8 +63,9 @@ class Control {
   }
 
   converterExtension(convertName: string, value: any, operator: string) {
-    
-    if (!convertName) {return value; }
+    if (!convertName) {
+      return value;
+    }
 
     const result = this.findExecuteFunction(
       {
@@ -81,10 +82,15 @@ class Control {
     if (!name) {
       return null;
     }
-    return this.findExecuteFunction({ name, value, extensionName: 'validator', }, null);
+    return this.findExecuteFunction(
+      { name, value, extensionName: 'validator' },
+      null,
+    );
   }
 
-  findExecuteFunction({ name, value, extensionName }: any, defaultReturn?: any,
+  findExecuteFunction(
+    { name, value, extensionName }: any,
+    defaultReturn?: any,
   ) {
     try {
       if (iocContainer[extensionName].has(name)) {
@@ -96,9 +102,7 @@ class Control {
     }
   }
 
-
   get value() {
-
     if (!this.field.dataBinding) {
       return undefined;
     }
@@ -109,19 +113,16 @@ class Control {
     } = this.field;
 
     const value = get(this._viewModel, path);
-    
-    this._errorList = (validator || []).
-      map((item: any) => this.validatorExtension(item.name, value)).
-      filter((e: any) => e);
+
+    this._errorList = (validator || [])
+      .map((item: any) => this.validatorExtension(item.name, value))
+      .filter((e: any) => e);
 
     return this.converterExtension(converter, value, 'get');
   }
 
   get viewModel() {
-    return JSON.parse(JSON.stringify(this._viewModel), function(res: any) {
-      console.log('res: ', res);
-
-    });
+    return this._viewModel;
   }
 
   get event() {

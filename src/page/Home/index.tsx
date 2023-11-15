@@ -3,6 +3,7 @@
 import PageFormBuilder from '../../dynamic/builder';
 
 @PageFormBuilder({
+  id: 'home',
   jsonName: '',
   provider: [],
 })
@@ -10,16 +11,19 @@ export default class Home {
   [x: string]: any;
 
   constructor(props: any) {
-    console.log('props: ', props);
+    // console.log('props: ', props);
 
     this.contents = props;
-    this.viewModel = { premium: 111 };
+    this.viewModel = { premium: 111, modal: { name: '111' } };
+    // this.viewModel.modal = {
+    //   name: '2222',
+    // };
     this.setJson({
       fields: [
         {
           id: 'input',
           type: 'input',
-          label: '666',
+          labelAction: 'getLabel',
           dataBinding: {
             path: 'premium',
             converter: 'convertLblPaymentAmount',
@@ -33,6 +37,7 @@ export default class Home {
             row: 1,
             column: 1,
             columnSpan: 6,
+            grid: "0 0"
           },
         },
         {
@@ -46,6 +51,7 @@ export default class Home {
             row: 0,
             column: 1,
             columnSpan: 2,
+            grid: "0 1"
           },
           action: {
             onclick: {
@@ -54,6 +60,44 @@ export default class Home {
                 type: 'label',
               },
             },
+          },
+        },
+        {
+          id: 'table',
+          type: 'table',
+          dataSourceAction: 'getCalculatorData',
+          metaData: {
+            columns: [
+              {
+                title: 'Name',
+                dataIndex: 'name',
+                key: 'name',
+              },
+              {
+                title: '内容',
+                dataIndex: 'content',
+                key: 'content',
+              },
+              {
+                title: '操作',
+                dataIndex: 'operate',
+                key: 'operate',
+                render: [
+                  {
+                    element: '<div>编辑</div>',
+                    onclick: {
+                      name: 'openModels',
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          layoutDefinition: {
+            row: 1,
+            column: 1,
+            columnSpan: 12,
+            grid: "1 1"
           },
         },
 
@@ -76,6 +120,7 @@ export default class Home {
             row: 10,
             column: 1,
             columnSpan: 12,
+            grid: "1 2"
           },
         },
       ],
@@ -83,26 +128,29 @@ export default class Home {
   }
 
   componentDidMount(data: any) {
-    console.log('data: ', data);
-    console.warn('data: ', this.contents);
+    // console.log('data: ', data);
+    // console.warn('data: ', this.contents);
 
     // this.loadJson({
     //   jsonName: 'config/editCalculator.json'
     // })
   }
 
-  getCalculatorData(res: any) {
-    console.log('res: ', res);
+  async getCalculatorData(res: any) {
+    // console.log('res: ', res);
 
-    return Promise.resolve([
-      {
-        key: '1',
-        name: 'required',
-        firstName: 'fdf',
-        content: 32,
-        operate: <div>fff</div>,
-      },
-    ]);
+    return new Promise((res) => {
+
+      setTimeout(() => {
+        res([
+          {
+            name: '33',
+            key: 0,
+            content: '33',
+          }
+        ]);
+      }, 2000);
+    });
   }
 
   getInputAction() {
@@ -117,15 +165,13 @@ export default class Home {
   showModel(params: any) {
     console.log(this.viewModel);
 
-    this.viewModel.modal = {
-      name: '2222',
-    };
     this.updateField([
       {
         id: 'model111',
+        list: [1,2,2,4],
         metaData: {
           title: '新增',
-          open: true
+          open: true,
         },
       },
     ]);
@@ -134,13 +180,20 @@ export default class Home {
   handleCancel(params: any) {
     console.log('params: ', params);
 
-    console.log(this);
+    console.log(this.getFieldById('model111'));
+
+
     this.updateField([{ id: 'model111', metaData: { open: false } }]);
   }
 
-  getCalData() {
-    return {
-      name: '343444',
-    };
+  getLabel() {
+
+    return 'fdf'
   }
+
+  // getCalData() {
+  //   return {
+  //     name: '343444',
+  //   };
+  // }
 }

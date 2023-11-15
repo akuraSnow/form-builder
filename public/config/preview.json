@@ -1,0 +1,82 @@
+{
+  "fields": [
+    {
+      "id": "000000empty",
+      "type": "empty",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "00000"
+      }
+    },
+    {
+      "id": "00001000select",
+      "type": "select",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "0000100"
+      }
+    },
+    {
+      "id": "00001010empty",
+      "type": "empty",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "0000101"
+      }
+    },
+    {
+      "id": "0000110000html",
+      "type": "html",
+      "label": "fdsf",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "000011000"
+      }
+    },
+    {
+      "id": "0000110010select",
+      "type": "select",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "000011001"
+      }
+    },
+    {
+      "id": "000011010select",
+      "type": "select",
+      "dataBinding": { "path": "a" },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "00001101"
+      }
+    },
+    {
+      "id": "00001110input",
+      "type": "input",
+      "dataBinding": { "path": "name" },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "0000111"
+      }
+    }
+  ]
+}

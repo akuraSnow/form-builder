@@ -27,11 +27,12 @@ export class HandleLifeCycle {
 
   _ready_handle_actions(jsonList: any, self: any) {
     const { actions: { load: { name ='', params=undefined } } = {load: {}}, fields } = jsonList;
-    if (!name) {
-      return {}
+    if (name) {
+      const extend = new Extend(fields, self.viewModel, self);
+      return extend.executeAction(name, params)
     }
-    const extend = new Extend(fields, self.viewModel, self);
-    return extend.executeAction(name, params) || self.viewModel;
+  
+    return self.viewModel;
   }
 
 

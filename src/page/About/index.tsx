@@ -5,19 +5,21 @@ import PageFormBuilder from "../../dynamic/builder";
 
 export const Context = createContext({});
 
-@PageFormBuilder({})
+@PageFormBuilder({
+  id: 'About'
+})
 export default class About{
   [x: string]: any;
   viewModel: any;
 
   constructor(props: any, res: any){
-    console.log('props: ', props);
-    console.log('res: ', res);
-    console.log('res: ', this);
+    // console.log('props: ', props);
+    // console.log('res: ', res);
+    // console.log('res: ', this);
 
 
       this.loadJson({
-        jsonName: 'config/about.json'
+        jsonName: 'config/preview.json'
       })
     
 
@@ -35,13 +37,18 @@ export default class About{
     //   premium: 123432
     // }
 
-    // setTimeout(() => {
-    //   // this.viewModel.application = {
-    //   //   name: '111111111111111'
-    //   // };
+    setTimeout(() => {
+      // this.viewModel.application = {
+      //   name: '111111111111111'
+      // };
 
-    //   this.viewModel.application.name = '111111111111';
-    // }, 2000)
+      this.viewModel.name = '111111111111';
+    }, 2000)
+
+  }
+
+  onPropsChange(props: any) {
+    console.log('props: ', props);
 
   }
 
@@ -83,7 +90,7 @@ export default class About{
 
   }
   readying(data: any) {
-    console.log('data: ', data);
+    // console.log('data: ', data);
 
   }
 

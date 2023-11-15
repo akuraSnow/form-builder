@@ -9,8 +9,8 @@ export default class util {
             return arr;
         } else {
             const pivot = cb(arr[0], 0);
-            const left = [];
-            const right = [];
+            const left: any = [];
+            const right: any = [];
             let point = pivot;
             for (let i = 1; i < arr.length; i++) {
                 point = cb(arr[i], point++)
@@ -24,7 +24,7 @@ export default class util {
         }
     }
 
-    static omitDeepLodash(input: any, props: string[]): any {
+    static omitDeepLodash(input: any, props: string[] = ['__path__']): any {
 
       let p = props;
       function omitDeepOnOwnProps(obj: any) {
@@ -70,7 +70,7 @@ export default class util {
           Object.defineProperty(target.prototype, key, {
             configurable: true,
             enumerable: true,
-            writable: true,
+            writable: false,
             value(...args: any) {
               const context = this;
               fns.forEach(function (fn: any) {

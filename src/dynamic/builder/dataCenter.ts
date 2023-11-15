@@ -7,7 +7,7 @@ export class DataCenter {
     _init_view_model(jsonList: any, viewModel: any = {}) {
 
         const newViewModel = this._get_init_view_model(jsonList.fields, viewModel);
-        const content = LayoutElement.loadSource(jsonList.fields, newViewModel);
+        const content = LayoutElement.loadSource(jsonList.fields);
         return {content, viewModel: newViewModel};
     }
 
